@@ -1,0 +1,9 @@
+#**
+Resolvers with None data sources can locally publish events that fire
+subscriptions or otherwise transform data without hitting a backend data source.
+The value of 'payload' is forwarded to $ctx.result in the response mapping template.
+*#
+{
+    "version": "2017-02-28",
+    "payload": $util.toJson(${context.arguments.input})
+}

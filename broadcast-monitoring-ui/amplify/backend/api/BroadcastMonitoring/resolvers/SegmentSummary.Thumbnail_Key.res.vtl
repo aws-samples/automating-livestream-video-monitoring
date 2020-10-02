@@ -1,0 +1,6 @@
+## Pass back the result from DynamoDB. **
+#if(!$ctx.result.items.isEmpty())
+    $util.toJson($ctx.result.items[0].Resized_S3_Key)
+#else
+     $util.error("Thumbnail not found")
+#end

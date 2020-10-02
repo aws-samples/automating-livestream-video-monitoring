@@ -1,8 +1,8 @@
 [submodule "broadcast-monitoring"]
 	path = broadcast-monitoring
-	url = codecommit::us-east-1://broadcast-monitoring
+	url = codecommit::us-east-1://aws-amer-sa-rnd+broadcast-maas-staff@broadcast-monitoring
     branch = blog-post
-[submodule "broadcast-monitoring-ui"]
-	path = broadcast-monitoring-ui
-	url = codecommit::us-east-1://broadcast-monitoring-ui
-    branch = blog-post
+# [submodule "broadcast-monitoring-ui"]
+# 	path = broadcast-monitoring-ui
+# 	url = codecommit::us-east-1://aws-amer-sa-rnd+broadcast-maas-staff@broadcast-monitoring-ui
+#     branch = blog-post
