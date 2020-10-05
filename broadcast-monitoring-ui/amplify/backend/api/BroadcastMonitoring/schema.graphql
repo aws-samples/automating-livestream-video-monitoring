@@ -1,0 +1,125 @@
+type NewSegmentSummary {
+  Stream_ID: String!
+  Start_DateTime: AWSDateTime!
+  Duration_Sec: Float!
+  S3_Key: String!
+  Station_Status: Boolean
+  Audio_Status: Boolean
+  Team_Status: Boolean
+  Sports_Status: Boolean
+  Thumbnail_Key: String
+}
+
+type SegmentSummary {
+  Stream_ID: String!
+  Start_DateTime: AWSDateTime!
+  Duration_Sec: Float!
+  S3_Key: String!
+  Station_Status: Boolean
+  Audio_Status: Boolean
+  Team_Status: Boolean
+  Sports_Status: Boolean
+  Thumbnail_Key: String
+}
+
+type SegmentDetail {
+  Stream_ID: String!
+  Start_DateTime: AWSDateTime!
+  End_DateTime: AWSDateTime!
+  Duration_Sec: Float!
+  Audio_Check: AudioCheckDetail
+  S3_Key: String!
+  Frames: [FrameDetail]
+}
+
+type AudioCheckDetail {
+  Audio_Status: Boolean
+  Silence_Duration: Float
+  Mean_DB: Float
+  Confidence: Float
+}
+
+type SportsCheckDetail {
+  Status: Boolean
+  Expected_Sports: String
+  Detected_Sports: String
+  Confidence: Float
+}
+
+type LogoCheckDetail {
+  Status: Boolean
+  Expected_Logo: String
+  Detected_Logo: String
+  Detected_Logo_Crop_S3_Key: String
+  Confidence: Float
+  Error: String
+}
+
+type TeamCheckDetail {
+  Status: Boolean
+  Team1_Expected: String
+  Team1_Detected_Text: String
+  Team1_Detected_Logo: String
+  Team1_Confidence: Float
+  Team1_Status: Boolean
+  Team2_Expected: String
+  Team2_Detected_Text: String
+  Team2_Detected_Logo: String
+  Team2_Confidence: Float
+  Team2_Status: Boolean
+  Expected_Teams: [String]
+  Detected_Teams: [String]
+}
+
+type FrameDetail {
+  DateTime: AWSDateTime!
+  S3_Key: String!
+  Resized_S3_Key: String
+  Logo_Check: LogoCheckDetail
+  Team_Check: TeamCheckDetail
+  Sports_Check: SportsCheckDetail
+  issueDetected: Boolean
+}
+
+type VideoFragmentsPage {
+  items: [SegmentSummary]
+  nextToken: String
+}
+
+input newSegmentSummaryReadyInput {
+  Stream_ID: String!
+  Start_DateTime: AWSDateTime!
+  Duration_Sec: Float!
+  S3_Key: String!
+  Station_Status: Boolean
+  Audio_Status: Boolean
+  Team_Status: Boolean
+  Sports_Status: Boolean
+  Thumbnail_Key: String
+}
+
+type Query {
+  listSegmentSummary(
+    Stream_ID: String!
+    After: AWSDateTime
+    nextToken: String
+    limit: Int
+  ): VideoFragmentsPage
+  getSegmentDetails(Stream_ID: String!, Start_DateTime: AWSDateTime!): SegmentDetail
+    @function(name: "fetch-segment-detail-${env}")
+}
+
+type Mutation {
+  newSegmentSummaryReady(input: newSegmentSummaryReadyInput!): NewSegmentSummary
+}
+
+type Subscription {
+  newSegmentSummaryAdded(Stream_ID: String!): NewSegmentSummary
+    @aws_subscribe(mutations: ["newSegmentSummaryReady"])
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}

@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: This template creates an ffmpeg layer for use with lambda function which process stream data
+
+Resources:
+  ffmpegLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: !Sub "${AWS::StackName}"
+      Description: ffmpeg layer used by Lambdas
+      ContentUri: ../src/layers/ffmpeg/.build/layer
+      CompatibleRuntimes:
+        - python3.7
+      RetentionPolicy: Retain
+
+Outputs:
+  ffmpegLayerArn:
+    Description: "Arn of the ffmpeg layer"
+    Value: !Ref ffmpegLayer
+    Export:
+      Name: ffmpegLayerArn
+
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: ffmpeg Lambda Layer
+    Description: A lambda layer to make using ffmpeg in lambda a delight
+    Author: A. Best (bestadam@amazon.com)
+    SpdxLicenseId: GPL-2.0-or-later
+    LicenseUrl: ../src/layers/ffmpeg/LICENSE.txt
+    Labels: ["ffmpeg", "lambda"]
+    SemanticVersion: 0.0.3

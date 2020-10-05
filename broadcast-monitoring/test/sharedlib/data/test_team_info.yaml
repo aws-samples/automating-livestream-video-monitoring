@@ -1,0 +1,9 @@
+Team 1:
+  id: team_1
+  abbr:
+    - ABC
+Team 2:
+  id: team_2
+  abbr:
+    - AB
+    - ABC

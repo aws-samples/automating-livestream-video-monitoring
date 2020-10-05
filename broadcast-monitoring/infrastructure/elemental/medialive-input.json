@@ -1,0 +1,20 @@
+{
+  "Arn": "arn:aws:medialive:us-east-1:206038983416:input:1866064",
+  "AttachedChannels": [
+    "9584802"
+  ],
+  "Destinations": [],
+  "Id": "1866064",
+  "InputClass": "SINGLE_PIPELINE",
+  "InputSourceType": "STATIC",
+  "MediaConnectFlows": [],
+  "Name": "s3-mp4-single-source",
+  "SecurityGroups": [],
+  "Sources": [
+    {
+      "Url": "s3://aws-rnd-broadcast-maas-data/videos/media_test_files/media-convert-joined-mp4/crop3/DemoLoop.mp4"
+    }
+  ],
+  "Tags": {},
+  "Type": "MP4_FILE"
+}

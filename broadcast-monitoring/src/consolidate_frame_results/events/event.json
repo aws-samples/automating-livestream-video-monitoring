@@ -1,0 +1,109 @@
+{
+  "s3Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+  "s3Key": "live/test_video_single_pipeline/test_1.m3u8",
+  "s3VersionId": "Wiw_kwJz6wy4_rScvWsIEMAUzbsKm8_O",
+  "config": {
+    "audio_check_enabled": false,
+    "station_logo_check_enabled": true,
+    "language_detect_check_enabled": false,
+    "team_detect_check_enabled": true,
+    "appsync_notify_enabled": false
+  },
+  "parsed": {
+    "isMasterManifest": false,
+    "streamId": "test_1",
+    "lastSegment": {
+      "s3Key": "live/test_video_single_pipeline/test_1_00043.ts",
+      "versionId": "1SlHzmy1QLQ_rpaZZU2Ek4nxXGydLe7n",
+      "durationSec": 5.875,
+      "startDateTime": "2020-02-22T22:15:59.375000Z",
+      "startTimeRelative": 254.3
+    },
+    "expectedProgram": {
+      "Team_Info": "AVL V NOR",
+      "Station_Logo": "Prime Video",
+      "Stream_ID": "test_1",
+      "Event_Title": "EPL AVL V NOR",
+      "Event_ID": "EPL-PROG3",
+      "Event_Type": "Sports",
+      "End_Time": 300,
+      "Start_Time": 180,
+      "languageCode": "en-en",
+      "Segment_Start_Time_In_Loop": 254.3
+    }
+  },
+  "frames": [
+    {
+      "Stream_ID": "test_1",
+      "DateTime": "2020-02-22T22:15:59.375000Z",
+      "Segment": "live/test_video_single_pipeline/test_1_00043.ts",
+      "Segment_Millis": 0,
+      "Segment_Frame_Num": 0,
+      "S3_Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+      "S3_Key": "frames/test_video_single_pipeline/test_1/original/2020/02/22/22/15:59:375000.jpg",
+      "Frame_Width": 1280,
+      "Frame_Height": 720,
+      "Resized_S3_Key": "frames/test_video_single_pipeline/test_1/resized/2020/02/22/22/15:59:375000.jpg"
+    },
+    {
+      "Stream_ID": "test_1",
+      "DateTime": "2020-02-22T22:16:00.375000Z",
+      "Segment": "live/test_video_single_pipeline/test_1_00043.ts",
+      "Segment_Millis": 1000,
+      "Segment_Frame_Num": 24,
+      "S3_Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+      "S3_Key": "frames/test_video_single_pipeline/test_1/original/2020/02/22/22/16:00:375000.jpg",
+      "Frame_Width": 1280,
+      "Frame_Height": 720,
+      "Resized_S3_Key": "frames/test_video_single_pipeline/test_1/resized/2020/02/22/22/16:00:375000.jpg"
+    },
+    {
+      "Stream_ID": "test_1",
+      "DateTime": "2020-02-22T22:16:01.375000Z",
+      "Segment": "live/test_video_single_pipeline/test_1_00043.ts",
+      "Segment_Millis": 2000,
+      "Segment_Frame_Num": 48,
+      "S3_Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+      "S3_Key": "frames/test_video_single_pipeline/test_1/original/2020/02/22/22/16:01:375000.jpg",
+      "Frame_Width": 1280,
+      "Frame_Height": 720,
+      "Resized_S3_Key": "frames/test_video_single_pipeline/test_1/resized/2020/02/22/22/16:01:375000.jpg"
+    },
+    {
+      "Stream_ID": "test_1",
+      "DateTime": "2020-02-22T22:16:02.375000Z",
+      "Segment": "live/test_video_single_pipeline/test_1_00043.ts",
+      "Segment_Millis": 3000,
+      "Segment_Frame_Num": 72,
+      "S3_Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+      "S3_Key": "frames/test_video_single_pipeline/test_1/original/2020/02/22/22/16:02:375000.jpg",
+      "Frame_Width": 1280,
+      "Frame_Height": 720,
+      "Resized_S3_Key": "frames/test_video_single_pipeline/test_1/resized/2020/02/22/22/16:02:375000.jpg"
+    },
+    {
+      "Stream_ID": "test_1",
+      "DateTime": "2020-02-22T22:16:03.375000Z",
+      "Segment": "live/test_video_single_pipeline/test_1_00043.ts",
+      "Segment_Millis": 4000,
+      "Segment_Frame_Num": 96,
+      "S3_Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+      "S3_Key": "frames/test_video_single_pipeline/test_1/original/2020/02/22/22/16:03:375000.jpg",
+      "Frame_Width": 1280,
+      "Frame_Height": 720,
+      "Resized_S3_Key": "frames/test_video_single_pipeline/test_1/resized/2020/02/22/22/16:03:375000.jpg"
+    },
+    {
+      "Stream_ID": "test_1",
+      "DateTime": "2020-02-22T22:16:04.375000Z",
+      "Segment": "live/test_video_single_pipeline/test_1_00043.ts",
+      "Segment_Millis": 5000,
+      "Segment_Frame_Num": 120,
+      "S3_Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+      "S3_Key": "frames/test_video_single_pipeline/test_1/original/2020/02/22/22/16:04:375000.jpg",
+      "Frame_Width": 1280,
+      "Frame_Height": 720,
+      "Resized_S3_Key": "frames/test_video_single_pipeline/test_1/resized/2020/02/22/22/16:04:375000.jpg"
+    }
+  ]
+}

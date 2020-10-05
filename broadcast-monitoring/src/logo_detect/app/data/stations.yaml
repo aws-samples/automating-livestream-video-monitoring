@@ -1,0 +1,55 @@
+---
+big_10:
+  logos:
+    - big_10
+  names:
+    - Big 10
+cnstv:
+  logos:
+    - cns-network
+    - cnstv
+    - cns-station-character
+  names:
+    - China News Service
+Brushes:
+  logos:
+    - channel_e
+  names:
+    - Brushes
+voa:
+  logos:
+    - voa
+  names:
+    - VOA
+    - Voice of America
+amazon_prime_video:
+  logos:
+    - amazon_prime_video
+  names:
+    - Prime Video
+channel_d:
+  logos:
+    - channel_d
+  names:
+    - Flower
+double_circle:
+  logos:
+    - channel_c
+  names:
+    - Double Circle
+diamond:
+  logos:
+    - channel_b
+  names:
+    - Diamond Channel
+circle_channel:
+  logos:
+    - channel_a
+  names:
+    - Circle Channel
+amazon_elemental:
+  logos:
+    - amazon_elemental
+  names:
+    - Amazon Elemental
+    - Elemental

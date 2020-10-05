@@ -1,0 +1,23 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+yapf = "*"
+flake8 = "*"
+pytest = "*"
+isort = "*"
+boto3 = "*"
+PyYAML = ">=5.4"
+jinja2 = ">=2.11.3"
+aws-sam-cli = "*"
+
+[packages]
+
+[requires]
+python_version = "3.7"
+
+[scripts]
+tests = 'pytest'
+gen-requirements = "sh -c \"pipenv lock -r > app/requirements.txt\""

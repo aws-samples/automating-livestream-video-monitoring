@@ -1,0 +1,2 @@
+PyYAML
+# boto3 - lambda runtime come with a boto3 already. uncomment if we want to package our own.

@@ -1,0 +1,4 @@
+[flake8]
+max-line-length = 120
+exclude = .git,__pycache__,.aws-sam,old,build,dist, src/sharedlib/yaml/**
+ignore = W291, E402

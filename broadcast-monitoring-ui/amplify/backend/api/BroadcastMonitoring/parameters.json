@@ -1,0 +1,8 @@
+{
+  "AppSyncApiName": "BroadcastMonitoring",
+  "APIKeyExpirationEpoch": "-1",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": "false",
+  "SegmentTable": "video-processing-Segments",
+  "FrameTable": "video-processing-VideoFrames"
+}

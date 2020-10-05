@@ -1,0 +1,233 @@
+{
+  "StartAt": "Parse Manifest",
+  "States": {
+    "Parse Manifest": {
+      "Type": "Task",
+      "Parameters": {
+        "Execution.$": "$$.Execution.Id",
+        "Input.$": "$"
+      },
+      "Resource": "${ManifestParserFunctionArn}",
+      "ResultPath": "$.parsed",
+      "Next": "Is Master Manifest?"
+    },
+    "Is Master Manifest?": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.parsed.isMasterManifest",
+          "BooleanEquals": true,
+          "Next": "Finished"
+        }
+      ],
+      "Default": "Find Expected Program"
+    },
+    "Find Expected Program": {
+      "Type": "Task",
+      "Resource": "${FindExpectedProgramFunctionArn}",
+      "Next": "Parallel",
+      "ResultPath": "$"
+    },
+    "Finished": {
+      "Type": "Succeed"
+    },
+    "Parallel": {
+      "Type": "Parallel",
+      "Branches": [
+        {
+          "StartAt": "Audio Detection",
+          "States": {
+            "Audio Detection": {
+              "Type": "Task",
+              "Resource": "${AudioDetectionFunctionArn}",
+              "Catch": [
+                {
+                  "ErrorEquals": [
+                    "States.ALL"
+                  ],
+                  "Next": "Audio Detect Error"
+                }
+              ],
+              "End": true
+            },
+            "Audio Detect Error": {
+              "Type": "Pass",
+              "ResultPath": null,
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "Extract Frames",
+          "States": {
+            "Extract Frames": {
+              "Type": "Task",
+              "Resource": "${FrameExtractorFunctionArn}",
+              "ResultPath": "$.frames",
+              "Next": "For each frame"
+            },
+            "For each frame": {
+              "Type": "Map",
+              "ItemsPath": "$.frames",
+              "Parameters": {
+                "frame.$": "$$.Map.Item.Value",
+                "config.$": "$.config",
+                "parsed.$": "$.parsed"
+              },
+              "Iterator": {
+                "StartAt": "Frame Processing",
+                "States": {
+                  "Frame Processing": {
+                    "Type": "Parallel",
+                    "Branches": [
+                      {
+                        "StartAt": "Text in Image",
+                        "States": {
+                          "Text in Image": {
+                            "Type": "Task",
+                            "Resource": "${TeamMatchingTextInImageFunctionArn}",
+                            "ResultPath": "$",
+                            "Catch": [
+                              {
+                                "ErrorEquals": [
+                                  "States.ALL"
+                                ],
+                                "Next": "Team Detect Error"
+                              }
+                            ],
+                            "End": true
+                          },
+                          "Team Detect Error": {
+                            "Type": "Pass",
+                            "ResultPath": null,
+                            "End": true
+                          }
+                        }
+                      },
+                      {
+                        "StartAt": "Station Logo Detection",
+                        "States": {
+                          "Station Logo Detection": {
+                            "Type": "Task",
+                            "Resource": "${LogoDetectionFunctionArn}",
+                            "ResultPath": null,
+                            "Catch": [
+                              {
+                                "ErrorEquals": [
+                                  "States.ALL"
+                                ],
+                                "Next": "Logo Detect Error"
+                              }
+                            ],
+                            "Next": "Crop Station Logo"
+                          },
+                          "Crop Station Logo": {
+                            "Type": "Task",
+                            "Resource": "${StationLogoCropFunctionArn}",
+                            "Catch": [
+                              {
+                                "ErrorEquals": [
+                                  "States.ALL"
+                                ],
+                                "Next": "Logo Detect Error"
+                              }
+                            ],
+                            "End": true
+                          },
+                          "Logo Detect Error": {
+                            "Type": "Pass",
+                            "ResultPath": null,
+                            "End": true
+                          }
+                        }
+                      },
+                      {
+                        "StartAt": "Team Logo Detection",
+                        "States": {
+                          "Team Logo Detection": {
+                            "Type": "Task",
+                            "Resource": "${TeamLogoDetectionFunctionArn}",
+                            "ResultPath": null,
+                            "Catch": [
+                              {
+                                "ErrorEquals": [
+                                  "States.ALL"
+                                ],
+                                "Next": "Team Logo Detect Error"
+                              }
+                            ],
+                            "End": true
+                          },
+                          "Team Logo Detect Error": {
+                            "Type": "Pass",
+                            "ResultPath": null,
+                            "End": true
+                          }
+                        }
+                      },
+                      {
+                        "StartAt": "Sports Detection",
+                        "States": {
+                          "Sports Detection": {
+                            "Type": "Task",
+                            "Resource": "${SportsDetectFunctionArn}",
+                            "Catch": [
+                              {
+                                "ErrorEquals": [
+                                  "States.ALL"
+                                ],
+                                "Next": "Sports Detect Error"
+                              }
+                            ],
+                            "End": true
+                          },
+                          "Sports Detect Error": {
+                            "Type": "Pass",
+                            "ResultPath": null,
+                            "End": true
+                          }
+                        }
+                      }
+                    ],
+                    "ResultPath": "$.frame.analysis",
+                    "OutputPath": "$.frame",
+                    "End": true
+                  }
+                }
+              },
+              "Next": "Consolidate Team Info",
+              "ResultPath": null,
+              "OutputPath": "$"
+            },
+            "Consolidate Team Info": {
+              "Type": "Task",
+              "Resource": "${ConsolidateTeamInfoFunctionArn}",
+              "ResultPath": null,
+              "OutputPath": "$",
+              "Next": "Consolidate Frame Info"
+            },
+            "Consolidate Frame Info": {
+              "Type": "Task",
+              "Resource": "${ConsolidateFrameInfoFunctionArn}",
+              "ResultPath": null,
+              "OutputPath": "$.frames",
+              "End": true
+            }
+          }
+        }
+      ],
+      "ResultPath": "$.detections",
+      "Next": "Consolidate"
+    },
+    "Consolidate": {
+      "Type": "Task",
+      "Resource": "${ConsolidateFunctionArn}",
+      "Next": "Notify AppSync"
+    },
+    "Notify AppSync": {
+      "Type": "Task",
+      "Resource": "${AppSyncNotifyFunctionArn}",
+      "End": true
+    }
+  }
+}

@@ -1,0 +1,81 @@
+Description: Master stack with both the processing backend and media ingestion 
+
+Parameters:
+  TemplatePath:
+    Type: String
+    Default: broadcast-monitoring-blog/cloudformation/
+    Description: S3Bucket Path where the templates are stored
+  InputCodec:
+    Description: Specify the codec of the src stream for MediaLive (AVC/HEVC/MPEG2)
+    Type: String
+    Default: AVC
+    AllowedValues:
+      - AVC
+      - HEVC
+      - MPEG2
+  InputType:
+    Description: Specify the input type for MediaLive (Default parametrs are for the Demo video)
+    Type: String
+    Default: MP4_FILE
+    AllowedValues:
+      - RTMP_PULL
+      - URL_PULL
+      - MP4_FILE
+  PriPullURL:
+    Description: Specify the primary src URL for the PULL input stream
+    Type: String
+    Default: "s3://broadcast-monitoring-blog/assets/demo-6min.mp4"
+  PriPullUser:
+    Description: (Optional) Specify a Username for the primary src URL
+    Type: String
+    Default: ""
+  PriPullPass:
+    Description: (Optional) Specify a Password for the primary src URL
+    Type: String
+    Default: ""
+
+Resources:
+
+  VideoProcessingStack:
+    Type: "AWS::CloudFormation::Stack"
+    Properties:
+      TemplateURL:
+        Fn::Sub: "https://s3.amazonaws.com/${TemplatePath}/video-processing.yml"
+      Tags:
+        - Key: Name
+          Value: Bradcast-Monitoring-video-processing
+
+  MediaIngestionStack:
+    Type: "AWS::CloudFormation::Stack"
+    Properties:
+      TemplateURL:
+        Fn::Sub: "https://s3.amazonaws.com/${TemplatePath}/media-ingestion.yml"
+      Parameters:
+        VideoProcessingBucket: 
+          Fn::GetAtt: 
+          - VideoProcessingStack
+          - Outputs.VideoProcessingBucket
+        InputCodec: !Ref InputCodec
+        InputType: !Ref InputType
+        PriPullURL: !Ref PriPullURL
+        PriPullUser: !Ref PriPullUser
+        PriPullPass: !Ref PriPullPass
+      Tags:
+        - Key: Name
+          Value:  Bradcast-Monitoring-Media-Ingestion
+
+Outputs:
+  VideoProcessingBucket:
+    Description: name of the bucket
+    Value:
+      Fn::GetAtt:
+        - VideoProcessingStack
+        - Outputs.VideoProcessingBucket
+
+
+  CloudFrontHlsEnpoint:
+    Description: HLS CloudFront HLS URL
+    Value:
+      Fn::GetAtt:
+        - MediaIngestionStack
+        - Outputs.CloudFrontHlsEnpoint

@@ -1,0 +1,42 @@
+{
+  "typeName": "Query",
+  "fieldName": "getSegmentDetails",
+  "arguments": {
+    "Stream_ID": "test_1",
+    "Start_DateTime": "2020-02-10T23:42:55.658000Z"
+  },
+  "identity": null,
+  "source": null,
+  "request": {
+    "headers": {
+      "x-forwarded-for": "72.21.196.64, 130.176.98.82",
+      "cloudfront-is-tablet-viewer": "false",
+      "cloudfront-viewer-country": "US",
+      "via": "2.0 d4b41c13595dcfd327649d8cdea72ce8.cloudfront.net (CloudFront)",
+      "cloudfront-forwarded-proto": "https",
+      "origin": "https://console.aws.amazon.com",
+      "content-length": "474",
+      "host": "gefysztqgndizckpczpubkhou4.appsync-api.us-east-1.amazonaws.com",
+      "x-forwarded-proto": "https",
+      "accept-language": "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7,ja-JP;q=0.6,ja;q=0.5",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36",
+      "cloudfront-is-mobile-viewer": "false",
+      "accept": "*/*",
+      "cloudfront-is-smarttv-viewer": "false",
+      "accept-encoding": "gzip, deflate, br",
+      "referer": "https://console.aws.amazon.com/appsync/home?region=us-east-1",
+      "x-api-key": "da2-qkshm7yz25b6ta6flmkue7lagy",
+      "content-type": "application/json",
+      "sec-fetch-mode": "cors",
+      "x-amz-cf-id": "eraTMZ3L2l3DlGS2a7_8cJayMIyV5XG3l4I9-vcfHCF4sjNTj_0VMg==",
+      "x-amzn-trace-id": "Root=1-5e433d84-c2db8e80fd5b4ce0667766c0",
+      "x-amz-user-agent": "AWS-Console-AppSync/",
+      "cloudfront-is-desktop-viewer": "true",
+      "sec-fetch-site": "cross-site",
+      "x-forwarded-port": "443"
+    }
+  },
+  "prev": {
+    "result": {}
+  }
+}

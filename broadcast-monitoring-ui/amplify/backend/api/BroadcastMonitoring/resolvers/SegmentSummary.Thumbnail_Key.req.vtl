@@ -1,0 +1,18 @@
+{
+  "version": "2017-02-28",
+  "operation": "Query",
+  "query": {
+    "expression": "#streamId = :Stream_ID and #dt >= :Segment_Start_time",
+    "expressionNames": {
+      "#streamId": "Stream_ID",
+      "#dt" : "DateTime"
+    },
+    "expressionValues": {
+      ":Stream_ID": $util.dynamodb.toDynamoDBJson($ctx.source.Stream_ID),
+      ":Segment_Start_time": $util.dynamodb.toDynamoDBJson($ctx.source.Start_DateTime),
+   },
+  },
+  "limit": $util.defaultIfNull($ctx.args.limit, 1),
+  "scanIndexForward": true,
+  "select": "ALL_ATTRIBUTES",
+}

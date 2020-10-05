@@ -1,0 +1,28 @@
+{
+  "CustomLabels": [
+    {
+      "Name": "netflix",
+      "Confidence": 88.0790023803711,
+      "Geometry": {
+        "BoundingBox": {
+          "Width": 0.03180000185966492,
+          "Height": 0.07208999991416931,
+          "Left": 0.23874999582767487,
+          "Top": 0.2536500096321106
+        }
+      }
+    }
+  ],
+  "ResponseMetadata": {
+    "RequestId": "44fe7753-6ad5-411d-8c7b-899e17a4fe10",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "content-type": "application/x-amz-json-1.1",
+      "date": "Tue, 11 Feb 2020 19:57:38 GMT",
+      "x-amzn-requestid": "44fe7753-6ad5-411d-8c7b-899e17a4fe10",
+      "content-length": "205",
+      "connection": "keep-alive"
+    },
+    "RetryAttempts": 0
+  }
+}

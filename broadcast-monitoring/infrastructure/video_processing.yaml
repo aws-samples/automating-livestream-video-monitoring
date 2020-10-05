@@ -1,0 +1,418 @@
+# Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: LicenseRef-.amazon.com.-AmznSL-1.0
+# Licensed under the Amazon Software License  http://aws.amazon.com/asl/
+
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: This template creates resources needed by video processing pipeline.
+
+Globals:
+  Function:
+    Runtime: python3.7
+    Timeout: 30
+    Environment:
+      Variables:
+        LOG_LEVEL: "INFO"
+        DDB_FRAME_TABLE: !Ref FrameTable
+        DDB_FRAGMENT_TABLE: !Ref SegmentTable
+        DDB_SCHEDULE_TABLE: !Ref ScheduleTable
+        FRAME_SAMPLE_FPS: 1
+        S3_BUCKET: !Sub "broadcast-monitoring-${AWS::AccountId}-${AWS::Region}"
+    Layers:
+      - !Ref SharedLibLayer
+
+Resources:
+  ffmpeglambdalayer:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location:
+        ApplicationId: arn:aws:serverlessrepo:us-east-1:496010403454:applications/ffmpeg-lambda-layer-python3
+        SemanticVersion: 0.0.3
+
+  VideoProcessingBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "broadcast-monitoring-${AWS::AccountId}-${AWS::Region}"
+      VersioningConfiguration:
+        Status: "Enabled"
+      LifecycleConfiguration:
+        Rules:
+          - Id: expire-old-hls-versions
+            Prefix: live/
+            Status: Enabled
+            # for any object's non-current versions, expire in 3 days
+            NoncurrentVersionExpirationInDays: 3
+            # cleanup incomplete multipart uploads
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 3
+      CorsConfiguration:
+        CorsRules:
+          - AllowedOrigins:
+              - "*"
+            AllowedMethods:
+              - GET
+            AllowedHeaders:
+              - "*"
+
+  #######################
+  # ROLES
+  #######################
+  ProjectLambdaRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: "sts:AssumeRole"
+      # keeping permission lax for experimentation. Should tighten permissions once solidified.
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+        - arn:aws:iam::aws:policy/AWSStepFunctionsFullAccess
+      Policies:
+        - PolicyName: Rekognition
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "rekognition:*"
+                Resource: "*"
+
+  StepFunctionsRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: !Sub states.${AWS::Region}.amazonaws.com
+            Action: "sts:AssumeRole"
+      Path: "/"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaRole
+        - arn:aws:iam::aws:policy/AWSStepFunctionsFullAccess
+      Policies:
+        - PolicyName: StatesExecutionPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "events:PutTargets"
+                  - "events:PutRule"
+                  - "events:DescribeRule"
+                Resource: !Sub "arn:${AWS::Partition}:events:${AWS::Region}:${AWS::AccountId}:rule/StepFunctionsGetEventsForStepFunctionsExecutionRule"
+              - Effect: Allow
+                Action:
+                  - "logs:*"
+                Resource: "*"
+
+  #######################
+  # LAMBDAS
+  #######################
+  StartSfnFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/start_sfn_execution/
+      Handler: main.lambda_handler
+      Role: !GetAtt ProjectLambdaRole.Arn
+      Environment:
+        Variables:
+          SFN_ARN: !Ref VideoProcessingStateMachine
+          AUDIO_CHECK_ENABLED: True
+          STATION_LOGO_CHECK_ENABLED: False
+          TEAM_LOGO_CHECK_ENABLED: False
+          TEAM_DETECT_CHECK_ENABLED: True
+          APPSYNC_NOTIFY_ENABLED: True
+          SPORTS_DETECT_CHECK_ENABLED: True
+      Events:
+        m3uManifestUploadEvent:
+          Type: S3
+          Properties:
+            Bucket: !Ref VideoProcessingBucket
+            Events: s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: suffix
+                    Value: .m3u
+        m3u8ManifestUploadEvent:
+          Type: S3
+          Properties:
+            Bucket: !Ref VideoProcessingBucket
+            Events: s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: suffix
+                    Value: .m3u8
+
+  FrameExtractorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/frame_extractor/
+      Handler: main.lambda_handler
+      Role: !GetAtt ProjectLambdaRole.Arn
+      MemorySize: 512
+
+  FindExpectedProgramFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/expected_program/app/
+      Handler: main.lambda_handler
+      Role: !GetAtt ProjectLambdaRole.Arn
+      MemorySize: 512
+      Layers:
+        - !GetAtt ffmpeglambdalayer.Outputs.ffmpegLayerArn
+
+  ManifestParserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/manifest_parser/
+      Handler: main.lambda_handler
+      Role: !GetAtt ProjectLambdaRole.Arn
+
+  TeamMatchingTextInImageFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/team_detection/app/
+      Handler: text_in_image.lambda_handler
+      Role: !GetAtt ProjectLambdaRole.Arn
+
+  AudioDetectionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/audio_detect/app/
+      Handler: main.lambda_handler
+      Role: !GetAtt ProjectLambdaRole.Arn
+      Layers:
+        - !GetAtt ffmpeglambdalayer.Outputs.ffmpegLayerArn
+
+  ConsolidateFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/consolidate_results/app/
+      Handler: main.lambda_handler
+      Role: !GetAtt ProjectLambdaRole.Arn
+
+  SportsDetectFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/sports_detect/app/
+      Handler: main.lambda_handler
+      Role: !GetAtt ProjectLambdaRole.Arn
+      Environment:
+        Variables:
+          SPORTS_MIN_CONFIDENCE: 60
+          SPORTS_MODEL_ARN:  TO_BE_UPDATED
+
+  ConsolidateTeamInfoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/consolidate_frame_results/app/
+      Handler: main.consolidate_team_data_lambda_handler
+      Role: !GetAtt ProjectLambdaRole.Arn
+
+  ConsolidateFrameInfoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/consolidate_frame_results/app/
+      Handler: main.consolidate_fragment_lambda_handler
+      Role: !GetAtt ProjectLambdaRole.Arn
+      Environment:
+        Variables:
+          STATION_LOGO_THRESHOLD: 60
+          TEAM_TEXT_SEGMENT_THRESHOLD: 20
+          SPORTS_TYPE_SEGMENT_THRESHOLD: 50
+
+  StationLogoCropFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/crop_detection/app/
+      Handler: main.crop_station_logo_lambda_handler
+      Role: !GetAtt ProjectLambdaRole.Arn
+
+  LogoDetectionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/logo_detect/app/
+      Handler: main.station_logo_detect_lambda_handler
+      Role: !GetAtt ProjectLambdaRole.Arn
+      Environment:
+        Variables:
+          LOGO_MIN_CONFIDENCE: 60
+          LOGO_MODEL_ARN: TO_BE_UPDATED
+
+  TeamLogoDetectionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/logo_detect/app/
+      Handler: main.team_logo_detect_lambda_handler
+      Role: !GetAtt ProjectLambdaRole.Arn
+      Environment:
+        Variables:
+          LOGO_MIN_CONFIDENCE: 60
+          LOGO_MODEL_ARN: TO_BE_UPDATED
+
+  ReuseDetectionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/reuse_detections/app/
+      Handler: main.lambda_handler
+      Role: !GetAtt ProjectLambdaRole.Arn
+
+  AppSyncNotifyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/appsync_notify/app/
+      Environment:
+        Variables:
+          APPSYNC_API_KEY: TO_BE_UPDATED
+          APPSYNC_API_ENDPOINT_URL: TO_BE_UPDATED
+      Handler: main.lambda_handler
+      Role: !GetAtt ProjectLambdaRole.Arn
+
+  SharedLibLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: !Sub "${AWS::StackName}-SharedLibs"
+      Description: Shared libs used by Lambdas
+      ContentUri: ../src/sharedlib
+      CompatibleRuntimes:
+        - python3.7
+      # because this layer gets a new version every time we deploy (rather than every time any code actually changes)
+      # we don't want to keep around all previous identical versions
+      RetentionPolicy: Delete
+
+  #######################
+  # DynamoDB tables
+  #######################
+  ScheduleTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: "video-processing-Schedule"
+      AttributeDefinitions:
+        - AttributeName: Stream_ID
+          AttributeType: "S"
+        - AttributeName: Start_Time
+          AttributeType: "N"
+      KeySchema:
+        - AttributeName: Stream_ID
+          KeyType: HASH
+        - AttributeName: Start_Time
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+      TimeToLiveSpecification:
+        AttributeName: ExpireTTL
+        Enabled: true
+
+  SegmentTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: "video-processing-Segments"
+      AttributeDefinitions:
+        - AttributeName: Stream_ID
+          AttributeType: "S"
+        - AttributeName: Start_DateTime
+          AttributeType: "S"
+        - AttributeName: Start_Time_Sec_In_Loop
+          AttributeType: "N"
+      KeySchema:
+        - AttributeName: Stream_ID
+          KeyType: HASH
+        - AttributeName: Start_DateTime
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        - IndexName: Stream_ID_Start_In_Loop
+          KeySchema:
+            - AttributeName: Stream_ID
+              KeyType: HASH
+            - AttributeName: Start_Time_Sec_In_Loop
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+      TimeToLiveSpecification:
+        AttributeName: ExpireTTL
+        Enabled: true
+
+  FrameTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: "video-processing-VideoFrames"
+      AttributeDefinitions:
+        - AttributeName: Stream_ID
+          AttributeType: "S"
+        - AttributeName: DateTime
+          AttributeType: "S"
+        - AttributeName: Segment
+          AttributeType: "S"
+        - AttributeName: Segment_Millis
+          AttributeType: "N"
+      KeySchema:
+        - AttributeName: Stream_ID
+          KeyType: HASH
+        - AttributeName: DateTime
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        - IndexName: Segment_Millis
+          KeySchema:
+            - AttributeName: Segment
+              KeyType: HASH
+            - AttributeName: Segment_Millis
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+
+  ###############################
+  # Step Functions State Machine
+  ###############################
+  VideoProcessingStateMachineLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "${AWS::StackName}-VideoProcessingStateMachine"
+      RetentionInDays: 30
+
+  VideoProcessingStateMachine:
+    Type: AWS::Serverless::StateMachine
+    Properties:
+      # uncomment below to change the state machine to express type
+      #      Type: EXPRESS
+      DefinitionUri: video_processing_state_machine.asl.json
+      DefinitionSubstitutions:
+        ManifestParserFunctionArn: !GetAtt ManifestParserFunction.Arn
+        FindExpectedProgramFunctionArn: !GetAtt FindExpectedProgramFunction.Arn
+        AudioDetectionFunctionArn: !GetAtt AudioDetectionFunction.Arn
+        FrameExtractorFunctionArn: !GetAtt FrameExtractorFunction.Arn
+        TeamMatchingTextInImageFunctionArn: !GetAtt TeamMatchingTextInImageFunction.Arn
+        LogoDetectionFunctionArn: !GetAtt LogoDetectionFunction.Arn
+        StationLogoCropFunctionArn: !GetAtt StationLogoCropFunction.Arn
+        TeamLogoDetectionFunctionArn: !GetAtt TeamLogoDetectionFunction.Arn
+        SportsDetectFunctionArn: !GetAtt SportsDetectFunction.Arn
+        ConsolidateTeamInfoFunctionArn: !GetAtt ConsolidateTeamInfoFunction.Arn
+        ConsolidateFrameInfoFunctionArn: !GetAtt ConsolidateFrameInfoFunction.Arn
+        ConsolidateFunctionArn: !GetAtt ConsolidateFunction.Arn
+        AppSyncNotifyFunctionArn: !GetAtt AppSyncNotifyFunction.Arn
+        ReuseDetectionFunctionArn: !GetAtt ReuseDetectionFunction.Arn
+
+      Logging:
+        Destinations:
+          - CloudWatchLogsLogGroup:
+              LogGroupArn: !GetAtt VideoProcessingStateMachineLogs.Arn
+        IncludeExecutionData: True
+        Level: ALL
+      Role: !GetAtt StepFunctionsRole.Arn
+
+Outputs:
+  VideoProcessingBucket:
+    Description: name of the bucket
+    Value: !Ref VideoProcessingBucket
+    Export:
+      Name: !Sub "${AWS::StackName}-VideoProcessingBucket"
