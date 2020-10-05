@@ -59,7 +59,7 @@ export default {
         controls: true,
         sources: [
           {
-            src: this.$store.getters.streamMasterUrl,
+            src: this.$store.streamMasterUrl,
             type: 'application/x-mpegURL'
           }
         ]
@@ -82,7 +82,7 @@ export default {
        * This function reads the HLS master playlist, find the child playlist, and then read the program time stamp
        * from the child playlist. It compares current time against the time in the playlist to determin liveliness.
        */
-      let parsedPlaylist = await parseMasterAndChildPlayList(this.$store.getters.streamMasterUrl)
+      let parsedPlaylist = await parseMasterAndChildPlayList(this.$store.streamMasterUrl)
       // // download the master playlist
       if (isPlayListLive(parsedPlaylist)) {
         if (!this.isLive) {

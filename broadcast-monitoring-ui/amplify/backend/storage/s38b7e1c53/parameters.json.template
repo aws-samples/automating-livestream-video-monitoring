@@ -1,5 +1,5 @@
 {
-  "bucketName": "video-processing-dev-496010403454-us-east-1",
+  "bucketName": "{{VideoProcessingBucket}}",
   "authPolicyName": "s3_amplify_8b7e1c53",
   "unauthPolicyName": "s3_amplify_8b7e1c53",
   "authRoleName": {

@@ -19,8 +19,9 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     stream_id: 'demo_1280_720', // set the stream ID here vs. config file to allow selecting different streams in the future.
-    streamUrlPrefix: 'https://d3kt1jnqdyst5n.cloudfront.net/f8885fad22f34ae59d84024dcc25157d/',
-    streamMasterManifest: 'index.m3u8',
+    streamUrlPrefix: process.env.VUE_APP_VIDEO_MASTER_MANIFEST.substring(0, process.env.VUE_APP_VIDEO_MASTER_MANIFEST.indexOf('index')),
+    streamMasterManifest: process.env.VUE_APP_VIDEO_MASTER_MANIFEST.substring(process.env.VUE_APP_VIDEO_MASTER_MANIFEST.indexOf('index')),
+    streamMasterUrl: process.env.VUE_APP_VIDEO_MASTER_MANIFEST,
     useCNDAuth: false, // whether the video stream is configured for auth (lambda@edge)
     user: null,
     showSegmentAfter: new Date(),
@@ -67,9 +68,6 @@ const store = new Vuex.Store({
       } else {
         return null
       }
-    },
-    streamMasterUrl: state => {
-      return state.streamUrlPrefix + state.streamMasterManifest
     }
   }
 })

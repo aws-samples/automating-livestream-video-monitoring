@@ -70,7 +70,7 @@ export default {
     srcUrl: function() {
       if (this.getSegmentDetails) {
         const { Start_DateTime: start, End_DateTime: end } = this.getSegmentDetails
-        const rawUrl = this.$store.getters.streamMasterUrl
+        const rawUrl = this.$store.streamMasterUrl
         return start && end ? `${rawUrl}?start=${start}&end=${end}` : rawUrl
       } else {
         return null

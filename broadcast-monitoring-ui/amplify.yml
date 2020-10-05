@@ -9,6 +9,8 @@ frontend:
         #        - envCache --set stackInfo ""
         - npm install -g @aws-amplify/cli@latest
         - amplify --version
+        - pip install -r requirements.txt
+        - python setup_config.py
         - amplifyPush --simple
         - cat src/aws-exports.js
         - npm ci
