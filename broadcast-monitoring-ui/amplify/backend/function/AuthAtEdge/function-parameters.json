@@ -1,9 +1,0 @@
-{
-    "permissions": {
-        "auth": {
-            "encompassuidcbe520f": [
-                "read"
-            ]
-        }
-    }
-}

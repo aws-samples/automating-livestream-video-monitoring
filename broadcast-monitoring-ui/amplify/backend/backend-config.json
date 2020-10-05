@@ -33,18 +33,6 @@
     }
   },
   "function": {
-    "AuthAtEdge": {
-      "service": "Lambda",
-      "providerPlugin": "awscloudformation",
-      "build": true,
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "encompassuidcbe520f",
-          "attributes": ["UserPoolId"]
-        }
-      ]
-    },
     "fetchSegmentDetail": {
       "service": "Lambda",
       "providerPlugin": "awscloudformation",
