@@ -1,0 +1,42 @@
+ffmpeg version N-51450-gb5dba152ef-static https://johnvansickle.com/ffmpeg/  Copyright (c) 2000-2020 the FFmpeg developers
+  built with gcc 6.3.0 (Debian 6.3.0-18+deb9u1) 20170516
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-debug --disable-ffplay --disable-indev=sndio --disable-outdev=sndio --cc=gcc-6 --enable-fontconfig --enable-frei0r --enable-gnutls --enable-gmp --enable-libgme --enable-gray --enable-libaom --enable-libfribidi --enable-libass --enable-libvmaf --enable-libfreetype --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenjpeg --enable-librubberband --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libvorbis --enable-libopus --enable-libtheora --enable-libvidstab --enable-libvo-amrwbenc --enable-libvpx --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxml2 --enable-libdav1d --enable-libxvid --enable-libzvbi --enable-libzimg
+  libavutil      56. 38.100 / 56. 38.100
+  libavcodec     58. 66.100 / 58. 66.100
+  libavformat    58. 35.104 / 58. 35.104
+  libavdevice    58.  9.103 / 58.  9.103
+  libavfilter     7. 71.100 /  7. 71.100
+  libswscale      5.  6.100 /  5.  6.100
+  libswresample   3.  6.100 /  3.  6.100
+  libpostproc    55.  6.100 / 55.  6.100
+Input #0, mpegts, from 'data/test_1_00024.ts':
+  Duration: 00:00:04.90, start: 278.576000, bitrate: 5338 kb/s
+  Program 1 
+    Stream #0:0[0x1e1]: Video: h264 (Main) ([27][0][0][0] / 0x001B), yuv420p(tv, bt709, progressive), 640x480 [SAR 1:1 DAR 4:3], 29.97 fps, 29.97 tbr, 90k tbn, 59.94 tbc
+    Stream #0:1[0x1ec](und): Audio: aac (LC) ([15][0][0][0] / 0x000F), 48000 Hz, stereo, fltp, 232 kb/s
+    Stream #0:2[0x1f6]: Data: timed_id3 (ID3  / 0x20334449)
+[Parsed_volumedetect_0 @ 0x6750940] n_samples: 0
+Stream mapping:
+  Stream #0:1 (aac) -> volumedetect
+  silencedetect -> Stream #0:0 (pcm_s16le)
+Press [q] to stop, [?] for help
+Output #0, null, to 'pipe:':
+  Metadata:
+    encoder         : Lavf58.35.104
+    Stream #0:0: Audio: pcm_s16le, 48000 Hz, stereo, s16, 1536 kb/s
+    Metadata:
+      encoder         : Lavc58.66.100 pcm_s16le
+[silencedetect @ 0x679adc0] silence_start: 1.33494
+[silencedetect @ 0x679adc0] silence_end: 1.84523 | silence_duration: 0.510292
+[silencedetect @ 0x679adc0] silence_start: 3.52498
+[silencedetect @ 0x679adc0] silence_end: 3.85456 | silence_duration: 0.329583
+size=N/A time=00:00:04.86 bitrate=N/A speed= 329x    
+video:0kB audio:912kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: unknown
+[Parsed_volumedetect_0 @ 0x679a9c0] n_samples: 466944
+[Parsed_volumedetect_0 @ 0x679a9c0] mean_volume: -27.2 dB
+[Parsed_volumedetect_0 @ 0x679a9c0] max_volume: -10.6 dB
+[Parsed_volumedetect_0 @ 0x679a9c0] histogram_10db: 4
+[Parsed_volumedetect_0 @ 0x679a9c0] histogram_11db: 45
+[Parsed_volumedetect_0 @ 0x679a9c0] histogram_12db: 109
+[Parsed_volumedetect_0 @ 0x679a9c0] histogram_13db: 249
+[Parsed_volumedetect_0 @ 0x679a9c0] histogram_14db: 486

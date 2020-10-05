@@ -1,0 +1,8 @@
+Test_Hashkey (S),Test_RangeKey (N),Test_Num_Column (N),Test_Str_Column (S)
+test_str,1,3.2,
+test_str,5,
+test_str,3,2.2222,
+test_str,9,0.2222,test
+test_str_2,9,0.2222,test
+
+

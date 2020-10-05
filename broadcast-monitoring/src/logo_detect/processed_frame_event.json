@@ -1,0 +1,9 @@
+{
+  "Stream_ID": "test_1",
+  "DateTime": "2020-01-23T21:36:35.290000Z",
+  "Chunk": "test_1_00016.ts",
+  "Millis_In_Chunk": 0,
+  "Frame_Num": 0,
+  "S3_Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+  "S3_Key": "frames/test_video_single_pipeline/test_1/original/2020/01/23/21/36:35:290000.jpg"
+}

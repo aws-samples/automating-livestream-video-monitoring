@@ -1,0 +1,28 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+flake8 = "*"
+awscli = "*"
+aws-sam-cli = "*"
+pytest = "*"
+numpy = "*"
+isort = "*"
+imageio = "*"
+imgaug = "*"
+
+[packages]
+boto3 = "*"
+broadcast-monitoring-lambda-helpers = {editable = true,path = "./src/sharedlib"}
+ffmpeg-python = "*"
+requests = "*"
+
+[requires]
+python_version = "3.7"
+
+[scripts]
+tests = "./run_tests.sh"
+deploy = "./deploy.sh ${STAGE} ${ARTIFACTS_BUCKET} ${AWS_REGION}"
+install-deps = "sh -c \"find ./src -type f -name requirements.txt -exec pipenv run pip install -r {} \\;\""

@@ -1,0 +1,26 @@
+version: 0.2
+
+env:
+  variables:
+      STAGE: dev
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.7
+  pre_build:
+    commands:
+      - pip install -q --upgrade pip
+      - pip install -q pipenv --user
+      - pipenv install --dev
+      - pipenv run install-deps
+
+  build:
+    commands:
+      - echo "running tests"
+      - pipenv run tests
+      - echo "deploying video pipeline stack"
+      - echo "lambda deployment bucket:"${ARTIFACTS_BUCKET}
+      - echo "AWS region:"${AWS_REGION}
+      - echo "stage:"${STAGE}
+      - pipenv run deploy

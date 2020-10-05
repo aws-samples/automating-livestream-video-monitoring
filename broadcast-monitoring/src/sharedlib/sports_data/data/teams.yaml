@@ -1,0 +1,376 @@
+AFC Bournemouth:
+  id: bournemouth
+  abbr:
+    - BOU
+  alt:
+    - athletic football club bournemouth
+    - Bournemouth
+    - bournemouth
+    - afc bournemouth
+Arsenal:
+  id: arsenal
+  abbr:
+    - ARS
+  alt:
+    - arsenal
+Aston Villa:
+  id: aston_villa
+  abbr:
+    - AVA
+    - AVL
+  alt:
+    - aston villa
+    - aston
+Brighton & Hove Albion:
+  id: brighton
+  abbr:
+    - BRH
+  alt:
+    - brighton & hove albion
+Burnley:
+  id: burnley
+  abbr:
+    - BUR
+  alt:
+    - burnley
+Chelsea:
+  id: chelsea
+  abbr:
+    - CHE
+  alt:
+    - chelsea
+Crystal Palace:
+  id: crystal_palace
+  abbr:
+    - CRY
+  alt:
+    - crystal palace
+Everton:
+  id: everton
+  abbr:
+    - EVE
+  alt:
+    - everton
+Leicester City:
+  id: leicester_city
+  abbr:
+    - LEI
+  alt:
+    - leicester city
+Liverpool:
+  id: liverpool
+  abbr:
+    - LIV
+  alt:
+    - liverpool
+Manchester City:
+  id: manchester_city
+  abbr:
+    - MCI
+  alt:
+    - m. city
+    - manchester city
+Manchester United:
+  id: manchester_united
+  abbr:
+    - MUN
+    - MU
+  alt:
+    - m. united
+    - manchester utd
+    - manchester united
+Newcastle United:
+  id: newcastle
+  abbr:
+    - NEW
+  alt:
+    - newcastle
+    - newcastle united
+Norwich City:
+  id: norwich_city
+  abbr:
+    - NOR
+  alt:
+    - norwich city
+    - norwich
+Sheffield United:
+  id: sheffield
+  abbr:
+    - SHU
+  alt:
+    - sheffield utd
+    - sheffield united
+Southampton:
+  id: southampton
+  abbr:
+    - SOU
+  alt:
+    - southampton
+Tottenham Hotspur:
+  id: tottenham
+  abbr:
+    - TOT
+  alt:
+    - tottenham hotspur
+    - tottenham
+Watford:
+  id: watford
+  abbr:
+    - WAT
+  alt:
+    - watford
+West Ham United:
+  id: west_ham_united
+  abbr:
+    - WHU
+  alt:
+    - west ham united
+Wolverhampton Wanderers:
+  id: wolverhampton
+  abbr:
+    - WLV
+  alt:
+    - wolverhampton wanderers
+    - wolverhampton
+
+#####################
+# MLS
+# see https://www.mlssoccer.com/media-resources/mls-style-guide
+#####################
+Atlanta United FC:
+  id: atlanta_fc
+  abbr:
+    - ATL
+
+Chicago Fire FC:
+  id: chicago_fire_fc
+  abbr:
+    - CHI
+
+FC Cincinnati:
+  id: atlanta_fc
+  abbr:
+    - CIN
+
+Columbus Crew SC:
+  id: columbus_crew
+  abbr:
+    - CLB
+
+D.C. United:
+  id: dc_united
+  abbr:
+    - DC
+
+Inter Miami CF:
+  id: miami_cf
+  abbr:
+    - MIA
+
+Montreal Impact:
+  id: montreal_impact
+  abbr:
+    - MTL
+
+New England Revolution:
+  id: ne_revolution
+  abbr:
+    - NE
+
+New York City FC:
+  id: nyc_fc
+  abbr:
+    - NYC
+
+New York Red Bulls:
+  id: red_bulls
+  abbr:
+    - NY
+
+Orlando City SC:
+  id: orlando_sc
+  abbr:
+    - ORL
+
+Philadelphia Union:
+  id: phi_union
+  abbr:
+    - PHI
+
+Toronto FC:
+  id: toronto_fc
+  abbr:
+    - TOR
+
+Colorado Rapids:
+  id: colorado_rapids
+  abbr:
+    - COL
+
+FC Dallas:
+  id: fc_dallas
+  abbr:
+    - DAL
+
+Houston Dynamo:
+  id: houston_dynamo
+  abbr:
+    - HOU
+
+LA Galaxy:
+  id: la_galaxy
+  abbr:
+    - LA
+
+Los Angeles Football Club:
+  id: la_fc
+  abbr:
+    - LFC
+
+Minnesota United FC:
+  id: minnesota_u_fc
+  abbr:
+    - MIN
+
+Nashville SC:
+  id: nashville_fc
+  abbr:
+    - NSC
+  alt:
+    - nashville
+
+Portland Timbers:
+  id: portland
+  abbr:
+    - POR
+  alt:
+    - timbers
+
+Real Salt Lake:
+  id: atlanta_fc
+  abbr:
+    - RSL
+  alt:
+    - claret and cobalt
+
+San Jose Earthquakes:
+  id: san-jose
+  abbr:
+    - SJ
+    - SAN
+
+Seattle Sounders FC:
+  id: sounders
+  abbr:
+    - SEA
+  alt:
+    - sounders
+
+Sporting Kansas City:
+  id: kansas-city
+  abbr:
+    - SKC
+
+Vancouver Whitecaps FC:
+  id: whitecaps_fc
+  abbr:
+    - VAN
+
+# big ten football
+Illinois Fighting Illini:
+  id: illini
+  alt:
+    - illinois
+    - illini
+  abbr:
+    - UIL
+
+Indiana Hoosiers:
+  id: indiana_hoosiers
+  alt:
+    - hoosiers
+    - indiana
+  abbr:
+    - UIN
+Iowa Hawkeyes:
+  id: iowa_hawkeyes
+  alt:
+    - hawkeyes
+    - iowa
+  abbr:
+    - UIA
+Maryland Terrapins:
+  id: maryland_terrapins
+  alt:
+    - terrapins
+    - maryland
+  abbr:
+    - UMD
+Michigan Wolverines:
+  id: michigan_wolverines
+  alt:
+    - wolverines
+    - michigan
+  abbr:
+    - UMI
+Michigan State Spartans:
+  id: michigan_state_spartans
+  alt:
+    - michigan state
+    - spartans
+  abbr:
+    - MSU
+Minnesota Golden Gophers:
+  id: minnesota_golden_gophers
+  alt:
+    - minnesota
+    - golden gophers
+  abbr:
+    - UMN
+Nebraska Cornhuskers:
+  id: nebraska_cornhuskers
+  alt:
+    - cornhuskers
+    - nebraska
+  abbr:
+    - NEB
+Northwestern Wildcats:
+  id: northwestern_wildcats
+  alt:
+    - northwestern
+    - wildcats
+  abbr:
+    - NW
+Ohio State Buckeyes:
+  id: ohio_state_buckeyes
+  alt:
+    - ohio state
+    - buckeyes
+  abbr:
+    - OSU
+Penn State Nittany Lions:
+  id: penn_state_nittany
+  alt:
+    - penn state
+  abbr:
+    - PSU
+Purdue Boilermakers:
+  id: purdue_boilermakers
+  alt:
+    - purdue
+    - boilermakers
+  abbr:
+    - PURD
+Rutgers Scarlet Knights:
+  id: rutgers_scarlet_knights
+  alt:
+    - rutgers
+  abbr:
+    - RUTG
+Wisconsin Badgers:
+  id: wisconsin_badgers
+  alt:
+    - wisconsin
+    - badgers
+  abbr:
+    - UWI

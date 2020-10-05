@@ -1,0 +1,19 @@
+---
+netflix:
+  logos:
+    - netflix
+  names:
+    - Netflix
+bbc:
+  logos:
+    - bbc
+  names:
+    - BBC
+    - British Broadcasting Corporation
+    - BBC 1
+    - BBC One
+hbo:
+  logos:
+    - hbo
+  names:
+    - HBO

@@ -1,0 +1,274 @@
+[
+  {
+    "Stream_ID": "test_1",
+    "DateTime": "2020-02-19T04:27:03.315500Z",
+    "Segment": "live/test_video_single_pipeline/test_1_00043.ts",
+    "Segment_Millis": 0,
+    "Segment_Frame_Num": 0,
+    "S3_Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+    "S3_Key": "frames/test_video_single_pipeline/test_1/original/2020/02/19/04/27:03:315500.jpg",
+    "Frame_Width": 1280,
+    "Frame_Height": 720,
+    "Resized_S3_Key": "frames/test_video_single_pipeline/test_1/resized/2020/02/19/04/27:03:315500.jpg",
+    "analysis": [
+      null,
+      [
+        {
+          "Name": "channel_one",
+          "Confidence": 75.1760025024414,
+          "Geometry": {
+            "BoundingBox": {
+              "Width": 0.019190000370144844,
+              "Height": 0.047850001603364944,
+              "Left": 0.7494199872016907,
+              "Top": 0.1098800003528595
+            }
+          }
+        }
+      ]
+    ]
+  },
+  {
+    "Stream_ID": "test_1",
+    "DateTime": "2020-02-19T04:27:04.316500Z",
+    "Segment": "live/test_video_single_pipeline/test_1_00043.ts",
+    "Segment_Millis": 1001,
+    "Segment_Frame_Num": 24,
+    "S3_Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+    "S3_Key": "frames/test_video_single_pipeline/test_1/original/2020/02/19/04/27:04:316500.jpg",
+    "Frame_Width": 1280,
+    "Frame_Height": 720,
+    "Resized_S3_Key": "frames/test_video_single_pipeline/test_1/resized/2020/02/19/04/27:04:316500.jpg",
+    "analysis": [
+      null,
+      [
+        {
+          "Name": "channel_one",
+          "Confidence": 68.73999786376953,
+          "Geometry": {
+            "BoundingBox": {
+              "Width": 0.020999999716877937,
+              "Height": 0.05730000138282776,
+              "Left": 0.7632899880409241,
+              "Top": 0.12313999980688095
+            }
+          }
+        },
+        {
+          "Name": "channel_one",
+          "Confidence": 60.082000732421875,
+          "Geometry": {
+            "BoundingBox": {
+              "Width": 0.023150000721216202,
+              "Height": 0.05225000157952309,
+              "Left": 0.17396999895572662,
+              "Top": 0.58406001329422
+            }
+          }
+        }
+      ]
+    ]
+  },
+  {
+    "Stream_ID": "test_1",
+    "DateTime": "2020-02-19T04:27:05.317500Z",
+    "Segment": "live/test_video_single_pipeline/test_1_00043.ts",
+    "Segment_Millis": 2002,
+    "Segment_Frame_Num": 48,
+    "S3_Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+    "S3_Key": "frames/test_video_single_pipeline/test_1/original/2020/02/19/04/27:05:317500.jpg",
+    "Frame_Width": 1280,
+    "Frame_Height": 720,
+    "Resized_S3_Key": "frames/test_video_single_pipeline/test_1/resized/2020/02/19/04/27:05:317500.jpg",
+    "analysis": [
+      null,
+      {
+        "Error": "ProvisionedThroughputExceededException",
+        "Cause": "{\"errorMessage\": \"An error occurred (ProvisionedThroughputExceededException) when calling the DetectCustomLabels operation (reached max retries: 4): Provisioned Rate exceeded\", \"errorType\": \"ProvisionedThroughputExceededException\", \"stackTrace\": [\"  File \\\"/opt/common/utils.py\\\", line 303, in wrapper\\n    res = f(*args, **kwargs)\\n\", \"  File \\\"/var/task/main.py\\\", line 77, in lambda_handler\\n    response = client.detect_custom_labels(Image=img_data, MinConfidence=min_confidence, ProjectVersionArn=model_arn)\\n\", \"  File \\\"/var/runtime/botocore/client.py\\\", line 272, in _api_call\\n    return self._make_api_call(operation_name, kwargs)\\n\", \"  File \\\"/var/runtime/botocore/client.py\\\", line 576, in _make_api_call\\n    raise error_class(parsed_response, operation_name)\\n\"]}"
+      }
+    ]
+  },
+  {
+    "Stream_ID": "test_1",
+    "DateTime": "2020-02-19T04:27:06.318500Z",
+    "Segment": "live/test_video_single_pipeline/test_1_00043.ts",
+    "Segment_Millis": 3003,
+    "Segment_Frame_Num": 72,
+    "S3_Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+    "S3_Key": "frames/test_video_single_pipeline/test_1/original/2020/02/19/04/27:06:318500.jpg",
+    "Frame_Width": 1280,
+    "Frame_Height": 720,
+    "Resized_S3_Key": "frames/test_video_single_pipeline/test_1/resized/2020/02/19/04/27:06:318500.jpg",
+    "analysis": [
+      null,
+      [
+        {
+          "Name": "bad_logo",
+          "Confidence": 61.8910026550293,
+          "Geometry": {
+            "BoundingBox": {
+              "Width": 0.02653999999165535,
+              "Height": 0.04918999969959259,
+              "Left": 0.4569700062274933,
+              "Top": 0.36608999967575073
+            }
+          }
+        }
+      ]
+    ]
+  },
+  {
+    "Stream_ID": "test_1",
+    "DateTime": "2020-02-19T04:27:07.319500Z",
+    "Segment": "live/test_video_single_pipeline/test_1_00043.ts",
+    "Segment_Millis": 4004,
+    "Segment_Frame_Num": 96,
+    "S3_Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+    "S3_Key": "frames/test_video_single_pipeline/test_1/original/2020/02/19/04/27:07:319500.jpg",
+    "Frame_Width": 1280,
+    "Frame_Height": 720,
+    "Resized_S3_Key": "frames/test_video_single_pipeline/test_1/resized/2020/02/19/04/27:07:319500.jpg",
+    "analysis": [
+      null,
+      {
+        "Error": "ProvisionedThroughputExceededException",
+        "Cause": "{\"errorMessage\": \"An error occurred (ProvisionedThroughputExceededException) when calling the DetectCustomLabels operation (reached max retries: 4): Provisioned Rate exceeded\", \"errorType\": \"ProvisionedThroughputExceededException\", \"stackTrace\": [\"  File \\\"/opt/common/utils.py\\\", line 303, in wrapper\\n    res = f(*args, **kwargs)\\n\", \"  File \\\"/var/task/main.py\\\", line 77, in lambda_handler\\n    response = client.detect_custom_labels(Image=img_data, MinConfidence=min_confidence, ProjectVersionArn=model_arn)\\n\", \"  File \\\"/var/runtime/botocore/client.py\\\", line 272, in _api_call\\n    return self._make_api_call(operation_name, kwargs)\\n\", \"  File \\\"/var/runtime/botocore/client.py\\\", line 576, in _make_api_call\\n    raise error_class(parsed_response, operation_name)\\n\"]}"
+      }
+    ]
+  },
+  {
+    "Stream_ID": "test_1",
+    "DateTime": "2020-02-19T04:27:08.320500Z",
+    "Segment": "live/test_video_single_pipeline/test_1_00043.ts",
+    "Segment_Millis": 5005,
+    "Segment_Frame_Num": 120,
+    "S3_Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+    "S3_Key": "frames/test_video_single_pipeline/test_1/original/2020/02/19/04/27:08:320500.jpg",
+    "Frame_Width": 1280,
+    "Frame_Height": 720,
+    "Resized_S3_Key": "frames/test_video_single_pipeline/test_1/resized/2020/02/19/04/27:08:320500.jpg",
+    "analysis": [
+      null,
+      [
+        {
+          "Name": "channel_one",
+          "Confidence": 77.91200256347656,
+          "Geometry": {
+            "BoundingBox": {
+              "Width": 0.01655999943614006,
+              "Height": 0.037060000002384186,
+              "Left": 0.5318599939346313,
+              "Top": 0.4402100145816803
+            }
+          }
+        },
+        {
+          "Name": "bad_logo",
+          "Confidence": 67.74700164794922,
+          "Geometry": {
+            "BoundingBox": {
+              "Width": 0.036090001463890076,
+              "Height": 0.06584999710321426,
+              "Left": 0.04651999846100807,
+              "Top": 0.721560001373291
+            }
+          }
+        },
+        {
+          "Name": "bad_logo",
+          "Confidence": 65.1709976196289,
+          "Geometry": {
+            "BoundingBox": {
+              "Width": 0.0313900001347065,
+              "Height": 0.06128000095486641,
+              "Left": 0.6935799717903137,
+              "Top": 0.3644999861717224
+            }
+          }
+        }
+      ]
+    ]
+  },
+  {
+    "Stream_ID": "test_1",
+    "DateTime": "2020-02-19T04:27:09.321500Z",
+    "Segment": "live/test_video_single_pipeline/test_1_00043.ts",
+    "Segment_Millis": 6006,
+    "Segment_Frame_Num": 144,
+    "S3_Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+    "S3_Key": "frames/test_video_single_pipeline/test_1/original/2020/02/19/04/27:09:321500.jpg",
+    "Frame_Width": 1280,
+    "Frame_Height": 720,
+    "Resized_S3_Key": "frames/test_video_single_pipeline/test_1/resized/2020/02/19/04/27:09:321500.jpg",
+    "analysis": [
+      null,
+      [
+        {
+          "Name": "bad_logo",
+          "Confidence": 78.66899871826172,
+          "Geometry": {
+            "BoundingBox": {
+              "Width": 0.027939999476075172,
+              "Height": 0.0573199987411499,
+              "Left": 0.04500000178813934,
+              "Top": 0.7924399971961975
+            }
+          }
+        },
+        {
+          "Name": "bad_logo",
+          "Confidence": 74.82699584960938,
+          "Geometry": {
+            "BoundingBox": {
+              "Width": 0.03243999928236008,
+              "Height": 0.061879999935626984,
+              "Left": 0.6970000267028809,
+              "Top": 0.3425000011920929
+            }
+          }
+        }
+      ]
+    ]
+  },
+  {
+    "Stream_ID": "test_1",
+    "DateTime": "2020-02-19T04:27:10.322500Z",
+    "Segment": "live/test_video_single_pipeline/test_1_00043.ts",
+    "Segment_Millis": 7007,
+    "Segment_Frame_Num": 168,
+    "S3_Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+    "S3_Key": "frames/test_video_single_pipeline/test_1/original/2020/02/19/04/27:10:322500.jpg",
+    "Frame_Width": 1280,
+    "Frame_Height": 720,
+    "Resized_S3_Key": "frames/test_video_single_pipeline/test_1/resized/2020/02/19/04/27:10:322500.jpg",
+    "analysis": [
+      null,
+      [
+        {
+          "Name": "bad_logo",
+          "Confidence": 78.60199737548828,
+          "Geometry": {
+            "BoundingBox": {
+              "Width": 0.028279999271035194,
+              "Height": 0.05660000070929527,
+              "Left": 0.04467000067234039,
+              "Top": 0.7937600016593933
+            }
+          }
+        },
+        {
+          "Name": "bad_logo",
+          "Confidence": 72.32099914550781,
+          "Geometry": {
+            "BoundingBox": {
+              "Width": 0.03277000039815903,
+              "Height": 0.060499999672174454,
+              "Left": 0.7054399847984314,
+              "Top": 0.34073999524116516
+            }
+          }
+        }
+      ]
+    ]
+  }
+]

@@ -1,0 +1,259 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: This template creates resources needed by AWS Elemental MediaLive and MediaPackage.
+
+Parameters:
+  InputCodec:
+    Description: Specify the codec of the src stream for MediaLive (AVC/HEVC/MPEG2)
+    Type: String
+    Default: AVC
+    AllowedValues:
+      - AVC
+      - HEVC
+      - MPEG2
+  VideoProcessingBucket:
+    Description: video processing S3 bucket to store HLS segments to process
+    Type: String
+  InputType:
+    Description: Specify the input type for MediaLive (Default parametrs are for the Demo video)
+    Type: String
+    Default: MP4_FILE
+    AllowedValues:
+      - RTMP_PULL
+      - URL_PULL
+      - MP4_FILE
+  PriPullURL:
+    Description: Specify the primary src URL for the PULL input stream
+    Type: String
+    Default: "s3://broadcast-monitoring-blog/assets/demo-6min.mp4"
+  PriPullUser:
+    Description: (Optional) Specify a Username for the primary src URL
+    Type: String
+    Default: ""
+  PriPullPass:
+    Description: (Optional) Specify a Password for the primary src URL
+    Type: String
+    Default: ""
+
+Resources:
+
+  MediaLiveInput:
+    Type: Custom::MediaLiveInput
+    Properties:
+      ServiceToken: !GetAtt ElementalCustomResource.Arn
+      Resource: MediaLiveInput
+      StreamName: !Sub ${AWS::StackName}-input
+      Type: !Ref InputType
+      PriUrl: !Ref PriPullURL
+      PriUser: !Ref PriPullUser
+      PriPass: !Ref PriPullPass
+
+  MediaLiveChannel:
+    DependsOn:
+      - MediaPackageChannel
+    Type: Custom::MediaLiveChannel
+    Properties:
+      ServiceToken: !GetAtt ElementalCustomResource.Arn
+      Resource: MediaLiveChannel
+      Name: !Sub ${AWS::StackName}-livestream
+      Codec: !Ref InputCodec
+      Role: !GetAtt MediaLiveAccessRole.Arn
+      InputId: !GetAtt MediaLiveInput.Id
+      MediaPackagePriUrl:  !GetAtt MediaPackageChannel.PrimaryUrl
+      MediaPackagePriUser: !GetAtt MediaPackageChannel.PrimaryUser
+      LiveStreamOutputS3Bucket: !Ref VideoProcessingBucket
+
+
+  MediaPackageChannel:
+    Type: Custom::MediaPackageChannel
+    Properties:
+      ServiceToken: !GetAtt ElementalCustomResource.Arn
+      Resource: MediaPackageChannel
+      ChannelId: !Sub ${AWS::StackName}-livestream
+
+  MediaPackageHlsEndpoint:
+    DependsOn: MediaPackageChannel
+    Type: Custom::MediaPackageHlsEndpoint
+    Properties:
+      ServiceToken: !GetAtt ElementalCustomResource.Arn
+      Resource: MediaPackageEndPoint
+      EndPoint: HLS
+      StartoverWindow: 3600
+      ChannelId: !GetAtt MediaPackageChannel.ChannelId
+      ProgramDateTimeIntervalSec: 6
+
+  ElementalCustomResource:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: Used to deploy custom resources
+      CodeUri: elemental/custom_resources/custom-resource-py/
+      Handler: lambda.handler
+      Policies:
+        - Statement:
+            - Sid: MediaLive
+              Effect: Allow
+              Action:
+                - medialive:createInputSecurityGroup
+                - medialive:describeInput
+                - medialive:createInput
+                - medialive:deleteInput
+                - medialive:stopChannel
+                - medialive:createChannel
+                - medialive:deleteChannel
+                - medialive:deleteInputSecurityGroup
+                - medialive:describeChannel
+                - medialive:startChannel
+                - medialive:tagResource
+              Resource: !Sub "arn:aws:medialive:${AWS::Region}:${AWS::AccountId}:*"
+            - Sid: MediaPackageChannel
+              Effect: Allow
+              Action:
+                - mediapackage:createChannel
+                - mediapackage:deleteChannel
+                - mediapackage:updateChannel
+                - mediapackage:describeChannel
+              Resource:
+                - !Sub "arn:aws:mediapackage:${AWS::Region}:${AWS::AccountId}:channels/*"
+            - Sid: MediaPackageEndpoint
+              Effect: Allow
+              Action:
+                - mediapackage:deleteOriginEndpoint
+                - mediapackage:deleteChannel
+                - mediapackage:updateOriginEndpoint
+                - mediapackage:describeOriginEndpoint
+              Resource:
+                - !Sub "arn:aws:mediapackage:${AWS::Region}:${AWS::AccountId}:origin_endpoints/*"
+            - Sid: MediaPackage
+              Effect: Allow
+              Action:
+                - mediapackage:createOriginEndpoint
+                - mediapackage:createChannel
+                - mediapackage:list*
+                - mediapackage:describe*
+              Resource:
+                - !Sub "arn:aws:mediapackage:${AWS::Region}:${AWS::AccountId}:*"
+            - Sid: SSM
+              Effect: Allow
+              Action:
+                - ssm:PutParameter
+              Resource: !Sub "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/*"
+            - Sid: PassRole
+              Effect: Allow
+              Action:
+                - iam:PassRole
+              Resource: !GetAtt MediaLiveAccessRole.Arn
+      Runtime: python3.7
+      Timeout: 180
+
+
+  LogsBucket:
+    DeletionPolicy: Retain
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: LogDeliveryWrite
+
+  CloudFront:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Origins:
+          - Id: hls
+            DomainName: !GetAtt MediaPackageHlsEndpoint.DomainName
+            OriginPath: /out/v1
+            CustomOriginConfig:
+              OriginProtocolPolicy: https-only
+        Enabled: 'true'
+        Logging:
+          Bucket: !GetAtt LogsBucket.DomainName
+          Prefix: livestream/
+        DefaultCacheBehavior:
+          TargetOriginId: hls
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          CachedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          ForwardedValues:
+            QueryString: 'true'
+            Cookies:
+              Forward: all
+            Headers:
+              - Origin
+              - Access-Control-Request-Method
+              - Access-Control-Request-Header
+          ViewerProtocolPolicy: allow-all
+        CacheBehaviors:
+          - TargetOriginId: hls
+            PathPattern: MediaPackageHlsEndpoint.Path
+            AllowedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+            CachedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+            ForwardedValues:
+              QueryString: 'true'
+              Cookies:
+                Forward: all
+              Headers:
+                - Origin
+                - Access-Control-Request-Method
+                - Access-Control-Request-Headers
+            ViewerProtocolPolicy: allow-all
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: 'true'
+
+  MediaLiveAccessRole:
+    Type: AWS::IAM::Role
+    Properties:
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSSMFullAccess
+        - arn:aws:iam::aws:policy/CloudWatchLogsFullAccess
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+          - Effect: Allow
+            Principal:
+              Service: medialive.amazonaws.com
+            Action: sts:AssumeRole
+  MediaPackageAccessRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Policies:
+        - PolicyName: !Sub "${AWS::StackName}-MediaPackageAccess"
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - secretsmanager:GetSecretValue
+                  - secretsmanager:DescribeSecret
+                  - secretsmanager:ListSecrets
+                  - secretsmanager:ListSecretVersionIds
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - iam:GetRole
+                  - iam:PassRole
+                Resource: "*"
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: mediapackage.amazonaws.com
+            Action: sts:AssumeRole
+
+Outputs:
+  CloudFrontHlsEnpoint:
+    Description: HLS CloudFront URL
+    Value: !Sub https://${CloudFront.DomainName}${MediaPackageHlsEndpoint.Manifest}

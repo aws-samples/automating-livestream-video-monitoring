@@ -1,0 +1,4 @@
+Stream_ID (S),Start_Time (N),End_Time (N),Event_ID (S),Event_Title (S),Audio (S),Event_Type (S),Station_Logo (S),Team_Info (S)
+test_1,0,60,SIM-PROG1,MAN V TOT,Eng,Sports,NBC,MAN V TOT
+test_1,60,90,SIM-PROG2,Russia Today,Rus,News,ABC,
+test_1,90,150,SIM-PROG3,Judge Judy,Eng,Show,ABC,

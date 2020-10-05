@@ -1,0 +1,13 @@
+{
+  "s3Bucket": "aws-rnd-broadcast-maas-video-processing-dev",
+  "s3Key": "live/test_video_single_pipeline/test_1.m3u8",
+  "s3VersionId": "KJCfz6c8Il5E_23jbzwYuFhGIpvMnrJE",
+  "manifest": {
+    "isMasterManifest": false,
+    "lastSegment": "test_1_00039.ts",
+    "lastSegmentS3Key": "live/test_video_single_pipeline/test_1_00039.ts",
+    "streamId": "test_1",
+    "durationSec": 2.1021,
+    "startingTime": "2020-01-27T15:51:47.562000Z"
+  }
+}
