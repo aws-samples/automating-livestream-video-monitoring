@@ -11,8 +11,11 @@ applications:
             #        - envCache --set stackInfo ""
 #            - npm install -g @aws-amplify/cli@latest   # this is now done by the Amplify Console
             - amplify --version
-            - pip install -r requirements.txt
-            - python setup_config.py
+            - yum install python37
+            - python3 --version
+            - pip3 --version
+            - pip3 install -r requirements.txt
+            - python3 setup_config.py
         build:
           commands:
             - amplifyPush --simple

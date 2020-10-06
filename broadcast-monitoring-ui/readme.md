@@ -13,7 +13,7 @@ The web application is built using AWS Amplify, VueJS and uses AWS AppSync to co
    ```shell script
    npm install
    ```
-1. Use pipenv to run the script to replace template values with output from the backend cloudformation stack: 
+1. Use pipenv to run a python script to replace template values with output from the backend cloudformation stack: 
 
    ```
    pipenv install
