@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: LicenseRef-.amazon.com.-AmznSL-1.0
 # Licensed under the Amazon Software License  http://aws.amazon.com/asl/
 
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: This template creates resources needed by video processing pipeline.
 
@@ -28,8 +28,7 @@ Resources:
       Location:
         ApplicationId: arn:aws:serverlessrepo:us-east-1:496010403454:applications/ffmpeg-lambda-layer-python3
         SemanticVersion: 0.0.2
-        
-      
+
   VideoProcessingBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -48,8 +47,7 @@ Resources:
               DaysAfterInitiation: 3
       CorsConfiguration:
         CorsRules:
-          -
-            AllowedOrigins:
+          - AllowedOrigins:
               - "*"
             AllowedMethods:
               - GET
@@ -129,8 +127,8 @@ Resources:
           SFN_ARN: !Ref VideoProcessingStateMachine
           REUSE_DETECTION_IF_AVAILABLE: True
           AUDIO_CHECK_ENABLED: True
-          STATION_LOGO_CHECK_ENABLED: True
-          TEAM_LOGO_CHECK_ENABLED: True
+          STATION_LOGO_CHECK_ENABLED: False
+          TEAM_LOGO_CHECK_ENABLED: False
           LANG_DETECT_CHECK_ENABLED: False
           TEAM_DETECT_CHECK_ENABLED: True
           APPSYNC_NOTIFY_ENABLED: True
@@ -175,7 +173,6 @@ Resources:
       Layers:
         - !GetAtt ffmpeglambdalayer.Outputs.ffmpegLayerArn
 
-
   ManifestParserFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -215,7 +212,7 @@ Resources:
       Environment:
         Variables:
           SPORTS_MIN_CONFIDENCE: 60
-          SPORTS_MODEL_ARN: 'arn:aws:rekognition:us-east-1:496010403454:project/sports-classification/version/sports-classification.2020-05-01T16.35.14/1588365314790'
+          SPORTS_MODEL_ARN: "arn:aws:rekognition:us-east-1:496010403454:project/sports-classification/version/sports-classification.2020-05-01T16.35.14/1588365314790"
 
   ConsolidateTeamInfoFunction:
     Type: AWS::Serverless::Function
@@ -252,7 +249,7 @@ Resources:
       Environment:
         Variables:
           LOGO_MIN_CONFIDENCE: 60
-          LOGO_MODEL_ARN: 'arn:aws:rekognition:us-east-1:496010403454:project/station-logos/version/station-logos.2020-04-28T01.46.34/1588052794240'
+          LOGO_MODEL_ARN: "arn:aws:rekognition:us-east-1:496010403454:project/station-logos/version/station-logos.2020-04-28T01.46.34/1588052794240"
 
   TeamLogoDetectionFunction:
     Type: AWS::Serverless::Function
@@ -263,7 +260,7 @@ Resources:
       Environment:
         Variables:
           LOGO_MIN_CONFIDENCE: 60
-          LOGO_MODEL_ARN: 'arn:aws:rekognition:us-east-1:206038983416:project/team-loog-detect/version/team-logo-detect.2020-03-02T12.12.46/1583169166689'
+          LOGO_MODEL_ARN: "arn:aws:rekognition:us-east-1:206038983416:project/team-loog-detect/version/team-logo-detect.2020-03-02T12.12.46/1583169166689"
 
   ReuseDetectionFunction:
     Type: AWS::Serverless::Function
@@ -389,7 +386,7 @@ Resources:
     Type: AWS::Serverless::StateMachine
     Properties:
       # uncomment below to change the state machine to express type
-#      Type: EXPRESS
+      #      Type: EXPRESS
       DefinitionUri: video_processing_state_machine.asl.json
       DefinitionSubstitutions:
         ManifestParserFunctionArn: !GetAtt ManifestParserFunction.Arn

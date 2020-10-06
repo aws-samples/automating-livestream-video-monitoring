@@ -29,19 +29,6 @@
         </template>
       </detail-table-row>
       <detail-table-row
-        check-name="Language"
-        v-if="languageCheck && languageCheck.Expected_Language !== null"
-        v-bind:check-status="languageCheck.Status"
-        v-bind:confidence="languageCheck.Confidence"
-      >
-        <template v-slot:received>
-          <p>{{ detectedLanguage }}</p>
-        </template>
-        <template v-slot:expected>
-          <p>{{ languageCheck.Expected_Language }}</p>
-        </template>
-      </detail-table-row>
-      <detail-table-row
         check-name="Sports"
         v-if="frameDetail && frameDetail.Sports_Check && frameDetail.Sports_Check.Expected_Sports"
         v-bind:check-status="frameDetail.Sports_Check.Status"
@@ -111,7 +98,7 @@ import DetailTableRow from './DetailTableRow'
 import DetailTableTeams from './DetailTableTeams'
 
 export default {
-  props: ['frameDetail', 'audioCheck', 'languageCheck', 'segmentDuration'],
+  props: ['frameDetail', 'audioCheck', 'segmentDuration'],
   components: { DetailTableRow, DetailTableTeams },
   data: function() {
     return {
@@ -154,9 +141,6 @@ export default {
     }
   },
   computed: {
-    detectedLanguage() {
-      return this.languageCheck.Detected_Language ? this.languageCheck.Detected_Language : 'None'
-    },
     team1ExpectDetails() {
       if (
         this.frameDetail &&
