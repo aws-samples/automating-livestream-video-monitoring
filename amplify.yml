@@ -11,7 +11,7 @@ applications:
             #        - envCache --set stackInfo ""
 #            - npm install -g @aws-amplify/cli@latest   # this is now done by the Amplify Console
             - amplify --version
-            - yum install python37
+#            - yum install python37
             - python3 --version
             - pip3 --version
             - pip3 install -r requirements.txt
