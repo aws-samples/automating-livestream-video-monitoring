@@ -50,7 +50,6 @@ def parse_s3_event(record):
             'audio_check_enabled': convert_str_to_bool(os.getenv('AUDIO_CHECK_ENABLED', "false")),
             STATION_LOGO_CHECK_CONFIG_KEY: convert_str_to_bool(os.getenv('STATION_LOGO_CHECK_ENABLED', "false")),
             TEAM_LOGO_CHECK_CONFIG_KEY: convert_str_to_bool(os.getenv('TEAM_LOGO_CHECK_ENABLED', "false")),
-            'language_detect_check_enabled': convert_str_to_bool(os.getenv('LANG_DETECT_CHECK_ENABLED', "false")),
             TEAM_CHECK_CONFIG_KEY: convert_str_to_bool(os.getenv('TEAM_DETECT_CHECK_ENABLED', "false")),
             APPSYNC_NOTIFY_CONFIG_KEY: convert_str_to_bool(os.getenv('APPSYNC_NOTIFY_ENABLED', "false")),
             REUSE_DETECTION_CONFIG_KEY: convert_str_to_bool(os.getenv('REUSE_DETECTION_IF_AVAILABLE', "false")),

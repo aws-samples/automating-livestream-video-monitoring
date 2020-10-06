@@ -6,7 +6,6 @@ export const SEGMENT_SUBSCRIPTION = gql`
       Start_DateTime
       Duration_Sec
       S3_Key
-      Language_Status
       Station_Status
       Audio_Status
       Team_Status

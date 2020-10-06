@@ -15,21 +15,6 @@ const segments_table = process.env.SEGMENT_TABLE
 const frame_table = process.env.FRAME_TABLE
 const documentClient = new AWS.DynamoDB.DocumentClient({ region: process.env.AWS_REGION })
 
-function parseLanguageCheckResult(segmentItem) {
-  let languageResult = {}
-  if (segmentItem.Language_Details) {
-    languageResult = {
-      Status: segmentItem.Language_Status,
-      Expected_Language: segmentItem.Language_Details.Expected,
-      Detected_Language: segmentItem.Language_Details.Detected
-    }
-    if (segmentItem.Language_Details.Confidence) {
-      languageResult.Confidence = segmentItem.Language_Details.Confidence
-    }
-  }
-  return languageResult
-}
-
 function parseAudioCheckResult(segmentItem) {
   let audioResult = {}
   if (segmentItem.Audio_Status !== undefined) {
@@ -203,7 +188,6 @@ const resolvers = {
           End_DateTime: endDateTimeStr,
           Duration_Sec: durationSec,
           Audio_Check: parseAudioCheckResult(segmentItem),
-          Language_Check: parseLanguageCheckResult(segmentItem),
           S3_Key: segmentItem.S3_Key,
           Frames: frames
         }
