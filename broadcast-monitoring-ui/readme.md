@@ -1,6 +1,7 @@
 # Sample web app for Automating broadcast video monitoring 
 
-
+The web application is built using AWS Amplify, VueJS and uses AWS AppSync to communicate with backend databases. 
+ 
 ## Project setup
 
 1. If you haven't installed amplify CLI, do so:
