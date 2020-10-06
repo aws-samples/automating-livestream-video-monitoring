@@ -1,19 +1,28 @@
 # build file for amplify console to deploy the frontend
-version: 0.1
+version: 1
 applications:
-  - appRoot: /broadcast-monitoring-ui
-    frontend:
+  - appRoot: broadcast-monitoring-ui
+    backend:
       phases:
         preBuild:
           commands:
             # uncomment the below when the enc cache needs to be reset
             # (see https://github.com/aws-amplify/amplify-console/issues/138)
             #        - envCache --set stackInfo ""
-#            - npm install -g @aws-amplify/cli@latest   # this is now done by the Amplify Console 
+            #            - npm install -g @aws-amplify/cli@latest   # this is now done by the Amplify Console
             - amplify --version
-            - pip install -r requirements.txt
-            - python setup_config.py
+            #            - yum install python37
+            - python3 --version
+            - pip3 --version
+            - pip3 install -r requirements.txt
+            - python3 setup_config.py
+        build:
+          commands:
             - amplifyPush --simple
+    frontend:
+      phases:
+        preBuild:
+          commands:
             - cat src/aws-exports.js
             - npm ci
         build:
@@ -22,7 +31,7 @@ applications:
       artifacts:
         baseDirectory: dist
         files:
-          - '**/*'
+          - "**/*"
       cache:
         paths:
           - node_modules/**/*
