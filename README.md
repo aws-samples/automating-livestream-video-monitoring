@@ -55,13 +55,19 @@ If you would like to develop on top of the application and make changes, you can
    ```
 
 5. In the `Makefile`, fill in your own S3 bucket name in `ARTIFACTS_BUCKET=<your-s3-bucket>` to be used for packaging Lambda code
-6. Run the `deploy.processing` make target to build and deploy the processing pipeline
+6. Run the make targets to build and deploy the processing pipeline. This creates a S3 bucket, a Step Functions state machine, a Lambda function that starts the Step Functions state machine when the S3 bucket has a new manifest file, and DynamoDB tables:
 
    ```
+   pipenv run make	build.processing
    pipenv run make	deploy.processing
    ```
 
-7.
+7. After the processing pipeline finish deploying , build and deploy the media ingest pipeline:
+
+   ```shel
+   pipenv run make build.mediaingest
+   pipenv run make deploy.mediaingest
+   ```
 
 ## Reporting security issues
 
