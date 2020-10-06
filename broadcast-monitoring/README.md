@@ -1,9 +1,6 @@
 Broadcast monitoring
 ===================
 
-### Architecture
-
-![./img/architecture.png](./img/architecture.png)
 
 ### Development 
 Before committing your code and submitting a PR, please run the test suite (including flake8 linter) and make sure all tests passes. 

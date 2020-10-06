@@ -1,13 +1,10 @@
-## My Project
+## AWS Blog post sample code - Automating broadcast video monitoring using machine learning
+### Architecture
 
-TODO: Fill this README out!
+![./img/architecture.png](./img/architecture.png)
 
-Be sure to:
 
-* Change the title in this README
-* Edit your repository description on GitHub
-
-## Security
+## Reporting security issues
 
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
 
