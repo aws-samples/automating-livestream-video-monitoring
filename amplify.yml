@@ -1,7 +1,7 @@
 # build file for amplify console to deploy the frontend
 version: 1
 applications:
-  - appRoot: /broadcast-monitoring-ui
+  - appRoot: broadcast-monitoring-ui
     backend:
       phases:
         preBuild:
