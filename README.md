@@ -16,8 +16,6 @@ The solution architecture for the application consists of three main components:
 
 ### Deploying the video ingestion pipeline and video processing pipeline
 
-[](#backend-deploy)
-
 This section discuss how to deploy the Video ingestion and processing pipeline component of the sample application
 
 #### Option 1: One-click deployment
