@@ -82,6 +82,50 @@ If you would like to develop on top of the application and make changes, you can
    - An AWS Elemental MediaPackage channel connected to the MediaLive channel
    - A CloudFront distribution connected to the MediaPackage channel
 
+## Deploying the web app
+
+To examine and visualize the results of the monitoring checks, we developed a demo web application using AWS Amplify, AWS AppSync and VueJS. The web app frontend uses a GraphQL subscription over web sockets to receive updates on the latest analysis of each HLS media segment. When the user clicks on a specific segment to see more detailed results, they can inspect the information extracted vs the expected for each sampled frame and confidence scores of each evaluation. They can also replay the video of selected segment, powered by Elemental MediaPackage’s [time-shifted viewing](https://docs.aws.amazon.com/mediapackage/latest/ug/time-shifted.html) feature.
+
+To deploy the web app using the Amplify Console:
+
+1.  Fork this GitHub Repo:
+1.  Go the [Amplify Console](https://console.aws.amazon.com/amplify/home), click “**Connect App**”, then select “**GitHub**” option and click the **continue** button
+
+1.  If you haven’t already, Amplify console will walk you through connecting to your GitHub account.
+1.  In the Add repository branch page, select the repo you just forked.
+
+    - Tick the checkmark for “Connecting a monorepo? Pick a folder.”
+    - type in `broadcast-monitoring-ui` for the folder that contains the webapp
+      ![Amplify console screenshot](./img/amplify-connect-select-branch.png)
+
+1.  In the Configure build settings page:
+
+    - Make sure the checkmark for “_Deploy updates to backend resources with your frontend on every code commit_” is selected
+    - Under “Select a backend environment”, choose “**create a new environment**”. This will create necessary resources that supports the web app, such as the AppSync graphQL API and Cognito User Pools to manage login.
+    - If you don’t already have an Amplify service IAM role, follow the wizard to create one. Otherwise, select an existing role.
+    - keep rest of the values as default, and click **Next**
+
+          	![Amplify console screenshot](./img/amplify-configure-build.png)
+
+1.  In the review page, double check the configurations before clicking **Save and Deploy**
+
+    ![Amplify console screenshot](./img/amplify-connect-review.png)
+
+1)  Wait for the web app to finish deployment.
+
+1)  We need to do one more configuration to link the processing pipeline to the web application. To do this:
+
+    - In the Amplify application, go to the “**Backend environments**” tab
+    - Click on the “**API**” link under “**categories added**”
+    - Then click on “**View in AppSync**” to go to the AWS AppSync console
+    - In the Settings tab, find the **API Details** section and copy the **API URL**
+    - Also copy the API key from the **API Keys** section
+
+          	![AppSync console screenshot](./img/AppSync-endpoint.png)
+
+    - Go to the AWS Lambda console, find the lambda function with name “_AppSyncNotify_” in it. Edit the environment variable by pasting the GraphQL API URL and Key you copied from previous step, and save
+          	![Lambda console screenshot](./img/lambda-env-appsync-endpoint.png)
+
 ## Reporting security issues
 
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
