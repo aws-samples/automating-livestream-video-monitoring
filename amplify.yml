@@ -1,8 +1,8 @@
 # build file for amplify console to deploy the frontend
-version: 0.1
+version: 1
 applications:
   - appRoot: /broadcast-monitoring-ui
-    frontend:
+    backend:
       phases:
         preBuild:
           commands:
@@ -11,8 +11,16 @@ applications:
             #        - envCache --set stackInfo ""
 #            - npm install -g @aws-amplify/cli@latest   # this is now done by the Amplify Console
             - amplify --version
+            - cd broadcast-monitoring-ui
             - pip install -r requirements.txt
             - python setup_config.py
+        build:
+          commands:
+            - amplifyPush --simple
+    frontend:
+      phases:
+        preBuild:
+          commands:
             - amplifyPush --simple
             - cat src/aws-exports.js
             - npm ci
