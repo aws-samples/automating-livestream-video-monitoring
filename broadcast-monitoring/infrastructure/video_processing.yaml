@@ -26,8 +26,8 @@ Resources:
     Type: AWS::Serverless::Application
     Properties:
       Location:
-        ApplicationId: arn:aws:serverlessrepo:us-east-1:145266761615:applications/ffmpeg-lambda-layer
-        SemanticVersion: 1.0.0
+        ApplicationId: arn:aws:serverlessrepo:us-east-1:496010403454:applications/ffmpeg-lambda-layer-python3
+        SemanticVersion: 0.0.2
         
       
   VideoProcessingBucket:
@@ -167,7 +167,6 @@ Resources:
 
   FindExpectedProgramFunction:
     Type: AWS::Serverless::Function
-    Runtime: python3.6
     Properties:
       CodeUri: ../src/expected_program/app/
       Handler: main.lambda_handler
@@ -193,7 +192,6 @@ Resources:
 
   AudioDetectionFunction:
     Type: AWS::Serverless::Function
-    Runtime: python3.6
     Properties:
       CodeUri: ../src/audio_detect/app/
       Handler: main.lambda_handler

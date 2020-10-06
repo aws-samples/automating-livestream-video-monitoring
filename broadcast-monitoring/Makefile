@@ -27,3 +27,9 @@ build.processing: ##=> Package processing pipeline CloudFormation
 			--region ${AWS_REGION} \
 			--output-template-file video-processing-${ENV_DEPLOY}-packaged.yaml && \
 		aws s3 cp video-processing-${ENV_DEPLOY}-packaged.yaml s3://${ARTIFACTS_BUCKET}/cloudformation/video-processing.yml
+
+
+build.parent:
+	$(info [*] Upload parent stack CloudFormation...)
+	cd infrastructure && \
+		aws s3 cp ingestion_and_processing_backend.yaml s3://${ARTIFACTS_BUCKET}/cloudformation/backend.yml

@@ -64,3 +64,18 @@ Resources:
         - Key: Name
           Value:  Bradcast-Monitoring-Media-Ingestion
 
+Outputs:
+  VideoProcessingBucket:
+    Description: name of the bucket
+    Value:
+      Fn::GetAtt:
+        - VideoProcessingStack
+        - Outputs.VideoProcessingBucket
+
+
+  CloudFrontHlsEnpoint:
+    Description: HLS CloudFront HLS URL
+    Value:
+      Fn::GetAtt:
+        - MediaIngestionStack
+        - Outputs.CloudFrontHlsEnpoint
