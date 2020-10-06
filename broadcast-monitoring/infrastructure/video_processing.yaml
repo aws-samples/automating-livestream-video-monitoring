@@ -249,7 +249,7 @@ Resources:
       Environment:
         Variables:
           LOGO_MIN_CONFIDENCE: 60
-          LOGO_MODEL_ARN: "arn:aws:rekognition:us-east-1:496010403454:project/station-logos/version/station-logos.2020-04-28T01.46.34/1588052794240"
+          LOGO_MODEL_ARN: TO_BE_UPDATED
 
   TeamLogoDetectionFunction:
     Type: AWS::Serverless::Function
@@ -260,7 +260,7 @@ Resources:
       Environment:
         Variables:
           LOGO_MIN_CONFIDENCE: 60
-          LOGO_MODEL_ARN: "arn:aws:rekognition:us-east-1:206038983416:project/team-loog-detect/version/team-logo-detect.2020-03-02T12.12.46/1583169166689"
+          LOGO_MODEL_ARN: TO_BE_UPDATED
 
   ReuseDetectionFunction:
     Type: AWS::Serverless::Function
