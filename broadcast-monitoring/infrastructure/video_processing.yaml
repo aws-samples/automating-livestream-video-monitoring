@@ -212,7 +212,7 @@ Resources:
       Environment:
         Variables:
           SPORTS_MIN_CONFIDENCE: 60
-          SPORTS_MODEL_ARN: "arn:aws:rekognition:us-east-1:496010403454:project/sports-classification/version/sports-classification.2020-05-01T16.35.14/1588365314790"
+          SPORTS_MODEL_ARN: TO_BE_UPDATED
 
   ConsolidateTeamInfoFunction:
     Type: AWS::Serverless::Function
