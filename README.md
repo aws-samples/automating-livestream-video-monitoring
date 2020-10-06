@@ -82,7 +82,7 @@ If you would like to develop on top of the application and make changes, you can
    - An AWS Elemental MediaPackage channel connected to the MediaLive channel
    - A CloudFront distribution connected to the MediaPackage channel
 
-## Deploying the web app
+### Deploying the web app
 
 To examine and visualize the results of the monitoring checks, we developed a demo web application using AWS Amplify, AWS AppSync and VueJS. The web app frontend uses a GraphQL subscription over web sockets to receive updates on the latest analysis of each HLS media segment. When the user clicks on a specific segment to see more detailed results, they can inspect the information extracted vs the expected for each sampled frame and confidence scores of each evaluation. They can also replay the video of selected segment, powered by Elemental MediaPackage’s [time-shifted viewing](https://docs.aws.amazon.com/mediapackage/latest/ug/time-shifted.html) feature.
 
