@@ -1,4 +1,8 @@
-## AWS Blog post sample code - Automating broadcast video monitoring using machine learning
+## Automating broadcast video monitoring using machine learning - blog post and sample application
+
+In the M&E industry, monitoring live broadcast and OTT video streams has largely been a manual process relying on human operators constantly watching the stream to identify quality or content issues. Latest advances in artificial intelligence(AI) can help automate many monitoring tasks that was once manual and support monitoring at greater scale. This repo presents a demo application for realtime livestream monitoring using AWS serverless and AI/ML services.
+
+Read more on the accompanying [blog post]().
 
 ### Architecture
 
@@ -38,11 +42,26 @@ If you would like to develop on top of the application and make changes, you can
 
 1. Fork the repo
 2. clone to local workspace using `git clone`
-3. Source code for the Video ingestion and processing pipeline components is under `broadcast-monitoring` subdirectory.
+3. Source code for the Video ingestion and processing pipeline components is under `broadcast-monitoring` subdirectory. Navigate to the directory:
 
    ```
    cd broadcast-monitoring/
    ```
+
+4. initialize pipenv
+
+   ```
+   pipenv install
+   ```
+
+5. In the `Makefile`, fill in your own S3 bucket name in `ARTIFACTS_BUCKET=<your-s3-bucket>` to be used for packaging Lambda code
+6. Run the `deploy.processing` make target to build and deploy the processing pipeline
+
+   ```
+   pipenv run make	deploy.processing
+   ```
+
+7.
 
 ## Reporting security issues
 
