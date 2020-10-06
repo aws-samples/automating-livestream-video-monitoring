@@ -24,7 +24,7 @@ Follow the below for a quick way to deploy the sample pipeline.
 
 1. Using the following button to start launching a CloudFormation stack:
 
-   ![button to launch cloudformation stack](./img/launch-cloudformation.png)
+   [![button to launch cloudformation stack](./img/launch-cloudformation.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=broadcast-monitoring&templateURL=https://s3.amazonaws.com/broadcast-monitoring-blog/cloudformation/backend.yml)
 
 1. Select the **Next** button to continue
 1. In **Step 2: Specify stack details** review the stack parameters.
