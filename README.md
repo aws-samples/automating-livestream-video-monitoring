@@ -105,7 +105,7 @@ To deploy the web app using the Amplify Console:
     - If you don’t already have an Amplify service IAM role, follow the wizard to create one. Otherwise, select an existing role.
     - keep rest of the values as default, and click **Next**
 
-          	![Amplify console screenshot](./img/amplify-configure-build.png)
+      ![Amplify console screenshot](./img/amplify-configure-build.png)
 
 1.  In the **Review** page, double check the configurations before clicking **Save and Deploy**
 
@@ -123,10 +123,10 @@ To deploy the web app using the Amplify Console:
     - In the Settings tab, find the **API Details** section and copy the **API URL**
     - Also copy the API key from the **API Keys** section
 
-          	![AppSync console screenshot](./img/AppSync-endpoint.png)
+      ![AppSync console screenshot](./img/AppSync-endpoint.png)
 
     - Go to the AWS Lambda console, find the lambda function with name “_AppSyncNotify_” in it. Edit the environment variable by pasting the GraphQL API URL and Key you copied from previous step, and save
-          	![Lambda console screenshot](./img/lambda-env-appsync-endpoint.png)
+      ![Lambda console screenshot](./img/lambda-env-appsync-endpoint.png)
 
 ## Reporting security issues
 
