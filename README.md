@@ -88,17 +88,17 @@ To examine and visualize the results of the monitoring checks, we developed a de
 
 To deploy the web app using the Amplify Console:
 
-1.  Fork this GitHub Repo:
+1.  Fork this GitHub Repo
 1.  Go the [Amplify Console](https://console.aws.amazon.com/amplify/home), click “**Connect App**”, then select “**GitHub**” option and click the **continue** button
 
 1.  If you haven’t already, Amplify console will walk you through connecting to your GitHub account.
-1.  In the Add repository branch page, select the repo you just forked.
+1.  In the **Add repository branch** page, select the repo you just forked.
 
-    - Tick the checkmark for “Connecting a monorepo? Pick a folder.”
-    - type in `broadcast-monitoring-ui` for the folder that contains the webapp
+    - Tick the checkmark for “_Connecting a monorepo? Pick a folder_.”
+    - Type in `broadcast-monitoring-ui` for the folder that contains the webapp
       ![Amplify console screenshot](./img/amplify-connect-select-branch.png)
 
-1.  In the Configure build settings page:
+1.  In the **Configure build settings** page:
 
     - Make sure the checkmark for “_Deploy updates to backend resources with your frontend on every code commit_” is selected
     - Under “Select a backend environment”, choose “**create a new environment**”. This will create necessary resources that supports the web app, such as the AppSync graphQL API and Cognito User Pools to manage login.
@@ -107,11 +107,13 @@ To deploy the web app using the Amplify Console:
 
           	![Amplify console screenshot](./img/amplify-configure-build.png)
 
-1.  In the review page, double check the configurations before clicking **Save and Deploy**
+1.  In the **Review** page, double check the configurations before clicking **Save and Deploy**
 
     ![Amplify console screenshot](./img/amplify-connect-review.png)
 
 1)  Wait for the web app to finish deployment.
+
+    ![Amplify console screenshot](./img/amplify-console-deploy-finish.png)
 
 1)  We need to do one more configuration to link the processing pipeline to the web application. To do this:
 
