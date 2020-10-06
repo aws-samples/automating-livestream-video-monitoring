@@ -3,7 +3,6 @@ type NewSegmentSummary {
   Start_DateTime: AWSDateTime!
   Duration_Sec: Float!
   S3_Key: String!
-  Language_Status: Boolean
   Station_Status: Boolean
   Audio_Status: Boolean
   Team_Status: Boolean
@@ -16,7 +15,6 @@ type SegmentSummary {
   Start_DateTime: AWSDateTime!
   Duration_Sec: Float!
   S3_Key: String!
-  Language_Status: Boolean
   Station_Status: Boolean
   Audio_Status: Boolean
   Team_Status: Boolean
@@ -30,7 +28,6 @@ type SegmentDetail {
   End_DateTime: AWSDateTime!
   Duration_Sec: Float!
   Audio_Check: AudioCheckDetail
-  Language_Check: LanguageCheckDetail
   S3_Key: String!
   Frames: [FrameDetail]
 }
@@ -39,13 +36,6 @@ type AudioCheckDetail {
   Audio_Status: Boolean
   Silence_Duration: Float
   Mean_DB: Float
-  Confidence: Float
-}
-
-type LanguageCheckDetail {
-  Status: Boolean
-  Expected_Language: String
-  Detected_Language: String
   Confidence: Float
 }
 
@@ -101,7 +91,6 @@ input newSegmentSummaryReadyInput {
   Start_DateTime: AWSDateTime!
   Duration_Sec: Float!
   S3_Key: String!
-  Language_Status: Boolean
   Station_Status: Boolean
   Audio_Status: Boolean
   Team_Status: Boolean

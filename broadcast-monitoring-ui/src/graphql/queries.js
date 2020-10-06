@@ -41,12 +41,6 @@ export const GET_SEGMENT_DETAILS = gql`
         Mean_DB
         Confidence
       }
-      Language_Check {
-        Status
-        Expected_Language
-        Detected_Language
-        Confidence
-      }
       S3_Key
       Frames {
         S3_Key

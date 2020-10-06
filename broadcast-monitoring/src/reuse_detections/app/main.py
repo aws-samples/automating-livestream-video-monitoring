@@ -99,7 +99,6 @@ def reuse_segment_detection(reuse_segment_start_dt, segment_start_dt, stream_id,
 
     status_summary = {
         'Audio_Status': segment_detection_to_reuse.get('Audio_Status', None),
-        'Language_Status': segment_detection_to_reuse.get('Language_Status', None),
         'Station_Status': segment_detection_to_reuse.get('Station_Status', None),
         'Team_Status': segment_detection_to_reuse.get('Team_Status', None),
         'Sports_Status': segment_detection_to_reuse.get('Sports_Status', None)

@@ -61,7 +61,6 @@ def push_appsync(stream_id, segment_start_date_time_str, segment_duration_sec, s
         Start_DateTime
         Duration_Sec
         S3_Key
-        Language_Status
         Station_Status
         Audio_Status
         Sports_Status
