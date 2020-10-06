@@ -27,7 +27,7 @@ Resources:
     Properties:
       Location:
         ApplicationId: arn:aws:serverlessrepo:us-east-1:496010403454:applications/ffmpeg-lambda-layer-python3
-        SemanticVersion: 0.0.2
+        SemanticVersion: 0.0.3
 
   VideoProcessingBucket:
     Type: AWS::S3::Bucket
@@ -298,7 +298,7 @@ Resources:
   ScheduleTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: "video-processing-dev-Schedule"
+      TableName: "video-processing-Schedule"
       AttributeDefinitions:
         - AttributeName: Stream_ID
           AttributeType: "S"
@@ -317,7 +317,7 @@ Resources:
   SegmentTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: "video-processing-dev-Segments"
+      TableName: "video-processing-Segments"
       AttributeDefinitions:
         - AttributeName: Stream_ID
           AttributeType: "S"
@@ -347,7 +347,7 @@ Resources:
   FrameTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: "video-processing-dev-VideoFrames"
+      TableName: "video-processing-VideoFrames"
       AttributeDefinitions:
         - AttributeName: Stream_ID
           AttributeType: "S"
