@@ -1,7 +1,7 @@
 # Sample web app for Automating broadcast video monitoring
 
-The web application is built using [AWS Amplify](https://docs.amplify.aws/), VueJS and uses AWS AppSync to communicate with backend databases.
-
+The web application is built using [AWS Amplify](https://docs.amplify.aws/), VueJS and uses AWS AppSync to communicate with backend databases. 
+ 
 ## Project setup
 
 1. If you haven't installed amplify CLI, do so:
@@ -13,14 +13,13 @@ The web application is built using [AWS Amplify](https://docs.amplify.aws/), Vue
    ```shell script
    npm install
    ```
-
-1. Use pipenv to run a python script to replace template values with output from the backend cloudformation stack:
+1. Use pipenv to run a python script to replace template values with output from the backend cloudformation stack: 
 
    ```
    pipenv install
-   pipenv run python setup_config.py
+   pipenv run setup_config.py
    ```
-
+   
 1. To use the existing amplify backend, set up amplify configuration
 
    ```
