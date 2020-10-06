@@ -1,19 +1,15 @@
-Broadcast monitoring
-===================
+# Broadcast monitoring video ingestion and video processing pipeline
 
+This subdirectory contains code for the video ingestion and video processing pipeline
 
-### Development 
-Before committing your code and submitting a PR, please run the test suite (including flake8 linter) and make sure all tests passes. 
+### Development
+
+Before committing your code and submitting a PR, please run the test suite (including flake8 linter) and make sure all tests passes.
+
 ```shell script
 ./run_tests.sh
 ```
 
-### Deployment 
+### Deployment
 
-The repo for backend processing is set up to be auto deployed by CodeBuild when the master branch has new commits (configured through `buildspec.yml` in the project root. )
-
-To deploy a separate stack for development purposes, run the deploy script from the project root.
-
-```
-sh deploy.sh <name-of-env>
-```
+Run make targets for deployment. See README at repo root for more details.
