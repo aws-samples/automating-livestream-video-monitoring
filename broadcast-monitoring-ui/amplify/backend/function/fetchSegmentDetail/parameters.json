@@ -1,4 +1,4 @@
 {
-  "SegmentTable": "video-processing-dev-Segments",
-  "FrameTable": "video-processing-dev-VideoFrames"
+  "SegmentTable": "video-processing-Segments",
+  "FrameTable": "video-processing-VideoFrames"
 }

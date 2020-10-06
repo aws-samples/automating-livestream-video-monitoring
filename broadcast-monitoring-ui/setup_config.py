@@ -17,7 +17,9 @@ cfn_outputs = response[0]['Outputs']
 cfn_output_map = {o['OutputKey']: o['OutputValue'] for o in cfn_outputs}
 print(cfn_output_map)
 
-file_list = ["amplify/backend/storage/s38b7e1c53/parameters.json.template", ".env.template"]
+file_list = ["amplify/backend/storage/s38b7e1c53/parameters.json.template",
+             ".env.template"]
+
 for file_path in file_list:
     jTemplate = jinjaEnv.get_template(file_path)
     new_path = file_path[:file_path.index('.template')]

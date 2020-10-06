@@ -1,4 +1,4 @@
-# Sample web app for Automating broadcast video monitoring 
+# Sample web app for Automating broadcast video monitoring
 
 The web application is built using [AWS Amplify](https://docs.amplify.aws/), VueJS and uses AWS AppSync to communicate with backend databases. 
  
@@ -23,13 +23,13 @@ The web application is built using [AWS Amplify](https://docs.amplify.aws/), Vue
 1. To use the existing amplify backend, set up amplify configuration
 
    ```
-   $ amplify init
+   $ amplify pull
 
    For more information on AWS Profiles, see:
    https://docs.aws.amazon.com/cli/latest/userguide/cli-multiple-profiles.html
 
    ? Do you want to use an AWS profile? Yes
-   ? Please choose the profile you want to use [edm-amplify] <-- pick your own
+   ? Please choose the profile you want to use [default] <-- pick your own
    ? Which app are you working on? d2uuxfjdxgg2k4 <-- use the value presented by the CLI
    Backend environment 'dev' found. Initializing...
    ? Choose your default editor: Sublime Text    <-- pick your own
@@ -50,7 +50,7 @@ The web application is built using [AWS Amplify](https://docs.amplify.aws/), Vue
 
 1. Verify that in `src/` folder, you should see a file `aws-exports.js` generated from previous step
 
-### Compiles and hot-reloads for development
+### Compiles and hot-reloads for local development
 
 ```
 npm run serve

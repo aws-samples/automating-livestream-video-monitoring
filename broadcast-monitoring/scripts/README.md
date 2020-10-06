@@ -1,10 +1,12 @@
 # Helper scripts
 
-Before running the scripts, install classes from `sharedlib`
+If not using `pipenv`, before running the scripts, install classes from `sharedlib`
 
 ```bash
 pip  --no-cache-dir install -e ../sharedlib
 ```
+
+If using `pipenv`, simply run `pipenv install` in the `broadcast-monitoring` directory.
 
 ### Load expected schedule metadata to DDB table
 
@@ -12,12 +14,12 @@ pip  --no-cache-dir install -e ../sharedlib
 python scripts/load_csv_to_ddb.py scripts/schedule.csv <table-name>
 ```
 
-
 ### Generate Logos
 
 The generate logos script is used to create images by augmenting a set of logo images to provide data to train a model for custom label detection. This script also uploads these images to s3 and creates a Ground Truth manifest file with bounding boxes annotations for the areas of interest in the images.
 
 #### TL;DR
+
 Let's generate some images. This script accepts a number of parameters to influence its behavior.
 
 As a pre-requisite, you'll need source image data. This data can be downloaded from s3 with the following command:
@@ -28,6 +30,7 @@ aws s3 sync s3://aws-rnd-broadcast-maas-data/images/station_logos ~/tmp/data/sta
 ```
 
 Basic usage is as follows:
+
 ```
 pipenv run python scripts/generate-logo-images.py ~/tmp/data/station_logos --filter 'channel_one' 'amazon_prime_video' 'bad_logo' 'good_logo' --count 100
 ```
@@ -76,49 +79,56 @@ Let's unpack the parts of this command:
 
 1. `data/png` - a directory containing pngs
 
-  ```
-  /home/dev/tmp/data/station_logos
-  ├── amazon_prime_video
-  │   └── amazon_prime_video.png
-  ├── bad_logo
-  │   └── bad_logo.png
-  ...
-  └── netflix
-     ├── 001-netflix.png
-     └── 002-netflix.png
-  ```
+```
+/home/dev/tmp/data/station_logos
+├── amazon_prime_video
+│   └── amazon_prime_video.png
+├── bad_logo
+│   └── bad_logo.png
+...
+└── netflix
+   ├── 001-netflix.png
+   └── 002-netflix.png
+```
 
 1. `~/tmp/data/png/background/` - a directory containing bag images
 
-1. `--filter 'good_logo', 'bad_logo', 'channel_one', 'amazon_prime_video'` - a subset of logos to generate images for.  The filename for the .png will also be the label
+1. `--filter 'good_logo', 'bad_logo', 'channel_one', 'amazon_prime_video'` - a subset of logos to generate images for. The filename for the .png will also be the label
 
 1. `--count 10` - Then number of images to generate per label
 
 #### Output
+
 This script outputs it general progress in generating the set of images. In the event of an error, exception info will be logged out.
 
 When complete, the script outputs the location of the generated Ground Truth manifest file.
+
 ```script
 Uploading output.manifest to s3: s3://aws-rnd-broadcast-maas-data/images/20200306-233841/output.manifest
 ```
 
 #### Notes
+
 The script outputs general progress as it's generating and uploading images to S3. When possible, run this script on an EC2 instance to benefit from the configurable CPU settings and accelerated network speeds.
 
 #### Concepts
-There were two primary objectives regarding image detection with this project. The first was to recognize a station logo from a still frame extracted from a video.  The second goal was to detect English Premier League(EPL) logos, and more broadly team logos, again from still frames extracted from video. Each of these objectives vary slightly in the properties of the logo to be detected.
+
+There were two primary objectives regarding image detection with this project. The first was to recognize a station logo from a still frame extracted from a video. The second goal was to detect English Premier League(EPL) logos, and more broadly team logos, again from still frames extracted from video. Each of these objectives vary slightly in the properties of the logo to be detected.
 
 ##### Station Logos
+
 After reviewing test footage, we confirmed that logos typically varied along two dimensions: position and opacity. This necessitated building a method to generate synthetic data to train an ML model using AWS Recognition Custom Labels.
 
 ##### Team Logos
-Team logos are used as a secondary method to detect teams playing in a video stream. Team logos primarily vary in size and position.  Training a model to detect logos again necessitated a dataset that would be difficult to acquire, so a synthetic dataset was used.
+
+Team logos are used as a secondary method to detect teams playing in a video stream. Team logos primarily vary in size and position. Training a model to detect logos again necessitated a dataset that would be difficult to acquire, so a synthetic dataset was used.
 
 #### Process
-- Download the necessary logos.  Where possible, use an SVG as a starting point.
+
+- Download the necessary logos. Where possible, use an SVG as a starting point.
 - SVGs were converted to PNGs using **CairoSVG** with a virtual environment created using piping
-    ```
-    pipenv run cairosvg ../broadcast-monitoring/data/svg amazon_prime_video.svg -o ../broadcast-monitoring/data/png/amazon_prime_video.png
-    ``` 
+  ````
+  pipenv run cairosvg ../broadcast-monitoring/data/svg amazon_prime_video.svg -o ../broadcast-monitoring/data/png/amazon_prime_video.png
+  ````
 - Using the `generate-logo-images.py` script images were generated by auto clearing the background color, setting the logo to a random opacity, scaling the logo, and overlaying it on a random background image from a set of images.
 - With AWS Recognition custom labels, each model was trained by splitting the dataset with a 80/20 train/test split.
