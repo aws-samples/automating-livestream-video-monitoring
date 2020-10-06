@@ -9,7 +9,7 @@ applications:
             # uncomment the below when the enc cache needs to be reset
             # (see https://github.com/aws-amplify/amplify-console/issues/138)
             #        - envCache --set stackInfo ""
-            - npm install -g @aws-amplify/cli@latest
+#            - npm install -g @aws-amplify/cli@latest   # this is now done by the Amplify Console 
             - amplify --version
             - pip install -r requirements.txt
             - python setup_config.py
