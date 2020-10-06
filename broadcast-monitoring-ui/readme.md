@@ -1,6 +1,5 @@
-# broadcast-monitoring-ui
+# Sample web app for Automating broadcast video monitoring 
 
-Broadcast monitoring prototype
 
 ## Project setup
 
