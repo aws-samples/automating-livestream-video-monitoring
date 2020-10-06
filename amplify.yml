@@ -21,7 +21,6 @@ applications:
       phases:
         preBuild:
           commands:
-            - amplifyPush --simple
             - cat src/aws-exports.js
             - npm ci
         build:
