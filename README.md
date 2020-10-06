@@ -111,11 +111,11 @@ To deploy the web app using the Amplify Console:
 
     ![Amplify console screenshot](./img/amplify-connect-review.png)
 
-1)  Wait for the web app to finish deployment.
+1.  Wait for the web app to finish deployment.
 
     ![Amplify console screenshot](./img/amplify-console-deploy-finish.png)
 
-1)  We need to do one more configuration to link the processing pipeline to the web application. To do this:
+1.  We need to do one more configuration to link the processing pipeline to the web application. To do this:
 
     - In the Amplify application, go to the “**Backend environments**” tab
     - Click on the “**API**” link under “**categories added**”
@@ -126,6 +126,7 @@ To deploy the web app using the Amplify Console:
       ![AppSync console screenshot](./img/AppSync-endpoint.png)
 
     - Go to the [AWS Lambda console](https://console.aws.amazon.com/lambda/home), find the lambda function with name “_AppSyncNotify_” in it. Edit the environment variable by pasting the GraphQL API URL and Key you copied from previous step, and click **save**
+    
       ![Lambda console screenshot](./img/lambda-env-appsync-endpoint.png)
 
 ## Reporting security issues
