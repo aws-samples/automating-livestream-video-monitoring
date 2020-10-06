@@ -38,11 +38,6 @@
           </td>
           <td>
             <span class="icon is-small">
-              <i :class="'mdi mdi-24px mdi-' + alertCheck(segment.Language_Status)"></i>
-            </span>
-          </td>
-          <td>
-            <span class="icon is-small">
               <i :class="'mdi mdi-24px mdi-' + alertCheck(segment.Station_Status)"></i>
             </span>
           </td>
@@ -79,7 +74,6 @@ export default {
         { name: 'Time', icon: 'filmstrip' },
         { name: 'Thumbnail', icon: 'image-area' },
         { name: 'Audio', icon: 'volume-high' },
-        { name: 'Language', icon: 'message-text' },
         { name: 'Logo', icon: 'television' },
         { name: 'Sports', icon: 'soccer' },
         { name: 'Teams', icon: 'account-group' }

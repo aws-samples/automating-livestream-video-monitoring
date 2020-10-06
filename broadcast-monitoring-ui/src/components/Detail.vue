@@ -39,7 +39,6 @@
       <DetailTable
         v-bind:frame-detail="this.$store.state.selectedFrame"
         v-bind:audio-check="getSegmentDetails.Audio_Check"
-        v-bind:language-check="getSegmentDetails.Language_Check"
         v-bind:segment-duration="getSegmentDetails.Duration_Sec"
       />
     </section>
