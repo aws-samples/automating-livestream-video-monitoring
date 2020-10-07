@@ -179,7 +179,21 @@ Once you have deployed the video ingestion and processing pipeline using CloudFo
 
 ### Running the app with custom models trained with Amazon Rekognition
 
+1. To supply your own Amazon Rekognition Custom Labels model for **sports detection**, go to the AWS Lambda console and find the function with name containing `SportsDetectFunction`. Edit the environment variable for the function by updating the value for the `SPORTS_MODEL_ARN` variable to the ARN of your Amazon Rekognition Custom Labels model.
+
+1. To supply your own Amazon Rekognition Custom Labels model for **station logo detection**, go to the AWS Lambda console and find the function with name containing `LogoDetectionFunction`. Edit the environment variable for the function by updating the value for the `LOGO_MODEL_ARN` variable to the ARN of your Amazon Rekognition Custom Labels model.
+
+1. To supply your own Amazon Rekognition Custom Labels model for **team logo detection**, go to the AWS Lambda console and find the function with name containing `LogoDetectionFunction`. Edit the environment variable for the function by updating the value for the `LOGO_MODEL_ARN` variable to the ARN of your Amazon Rekognition Custom Labels model.
+
+1. Ensure the Amazon Rekognition Custom Labels model is up and running.
+
+1. To enable the corresponding features, go to the AWS Lambda console and find the function with name containing `StartSfnFunction`. Edit the environment variable and make sure the feature you want enabled is set to `true`. When the feature is set to `false`, the corresponding Lambda function will skip running its function code.
+
+   ![environment variable screenshot](./img/enable-features-lambda.png)
+
 ## Stoping the application
+
+1. To stop the processing pipeline, simply go to the [Elemental MediaLive console](https://console.aws.amazon.com/medialive/home?region=us-east-1), and select the running the MediaLive channel and select the **Stop** action
 
 ## Clean up
 
