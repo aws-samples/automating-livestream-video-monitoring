@@ -156,7 +156,7 @@ Once you have deployed the video ingestion and processing pipeline using CloudFo
 
 ### Running the app without custom Rekognition models
 
-1. You need to first populate the expected programming schedule table in DynamoDB. Use the provided script and sample schedule if you are using the test source video provided. If using your own video, adjust the content accordingly.
+1. Populate the expected programming schedule table ( `video-processing-Schedule` table) in DynamoDB. Use the provided script and sample schedule if you are using the test source video provided. If using your own video, adjust the content accordingly.
 
    ```
    cd broadcast-monitoring
@@ -169,11 +169,11 @@ Once you have deployed the video ingestion and processing pipeline using CloudFo
 
    ![Elemental MediaLive console sreenshot](./img/start-medialive.png)
 
-1) Go to the [AWS Amplify console](https://console.aws.amazon.com/amplify/home?region=us-east-1), find the URL of the web application and open the web app in Chrome or Firefox.
+1. Go to the [AWS Amplify console](https://console.aws.amazon.com/amplify/home?region=us-east-1), find the URL of the web application and open the web app in Chrome or Firefox.
 
-1) Register an account using your email. After verifying your email with a verification code, you should be able to log in to the web app.
+1. Register an account using your email. After verifying your email with a verification code, you should be able to log in to the web app.
 
-1) Here's an example screenshot of the web app when the features requiring custom models are disabled:
+1. Here's an example screenshot of the web app when the features requiring custom models are disabled:
 
    ![web app screenshot with no custom models](./img/webapp-screenshot-no-custom-models.png)
 
