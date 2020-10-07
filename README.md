@@ -1,10 +1,26 @@
-## Automating broadcast video monitoring using machine learning - blog post and sample application
+# Automating broadcast video monitoring using machine learning - blog post and sample application
 
 In the M&E industry, monitoring live broadcast and OTT video streams has largely been a manual process relying on human operators constantly watching the stream to identify quality or content issues. Latest advances in artificial intelligence(AI) can help automate many monitoring tasks that was once manual and support monitoring at greater scale. This repo presents a demo application for realtime livestream monitoring using AWS serverless and AI/ML services.
 
 Read more on the accompanying [blog post]().
 
-### Architecture
+- [Architecture](#architecture)
+- [Deploying the application in your AWS account](#deploying-the-application-in-your-aws-account)
+  - [Deploying the video ingestion pipeline and video processing pipeline](#deploying-the-video-ingestion-pipeline-and-video-processing-pipeline)
+    - [Option 1: One-click deployment](#option-1--one-click-deployment)
+    - [Option 2: build from source](#option-2--build-from-source)
+  - [Deploying the web app](#deploying-the-web-app)
+- [Running the application](#running-the-application)
+  - [Running the app without custom Rekognition models](#running-the-app-without-custom-rekognition-models)
+  - [Running the application with custom Rekognition models](#running-the-application-with-custom-rekognition-models)
+- [Stoping the application](#stoping-the-application)
+- [Clean up](#clean-up)
+- [Reporting security issues](#reporting-security-issues)
+- [License](#license)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+## Architecture
 
 The solution architecture for the application consists of three main components:
 
@@ -13,6 +29,8 @@ The solution architecture for the application consists of three main components:
 - A web application that demonstrates the realtime status and details of each monitoring check being performed on the video stream
 
 ![./img/architecture.png](./img/architecture.png)
+
+## Deploying the application in your AWS account
 
 ### Deploying the video ingestion pipeline and video processing pipeline
 
@@ -129,6 +147,23 @@ To deploy the web app using the Amplify Console:
     - Go to the [AWS Lambda console](https://console.aws.amazon.com/lambda/home), find the lambda function with name “_AppSyncNotify_” in it. Edit the environment variable by pasting the GraphQL API URL and Key you copied from previous step, and click **save**
 
       ![Lambda console screenshot](./img/lambda-env-appsync-endpoint.png)
+
+## Running the application
+
+### Running the app without custom Rekognition models
+
+Step 1: Start the media processing pipeline
+Running the application without custom Rekognition models
+
+To get the application running without suppliying your own custom Rekognition models, we can simply
+
+Step 2: Log in the the web application
+
+### Running the application with custom Rekognition models
+
+## Stoping the application
+
+## Clean up
 
 ## Reporting security issues
 
