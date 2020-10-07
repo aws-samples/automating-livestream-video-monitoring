@@ -193,9 +193,19 @@ Once you have deployed the video ingestion and processing pipeline using CloudFo
 
 ## Stoping the application
 
-1. To stop the processing pipeline, simply go to the [Elemental MediaLive console](https://console.aws.amazon.com/medialive/home?region=us-east-1), and select the running the MediaLive channel and select the **Stop** action
+To stop the processing pipeline, simply go to the [Elemental MediaLive console](https://console.aws.amazon.com/medialive/home?region=us-east-1), and select the running the MediaLive channel and select the **Stop** action
+
+When the MediaLive channel is stopped, no more new writes will go to the S3 bucket and no Step Functions workflow will be triggered.
 
 ## Clean up
+
+To remove the deployed infrastructure from your account:
+
+1. Go to AWS CloudFormation console, delete the root stack for backend resources for Amplify web app with name starting with `amplify-broadcast`
+
+1. Delete the stack for the media ingestion and processing pipeline `broadcast-monitoring`
+
+1. Go to the AWS Amplify console and delete the web app.
 
 ## Reporting security issues
 
