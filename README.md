@@ -12,7 +12,7 @@ Read more on the accompanying [blog post]().
   - [Deploying the web app](#deploying-the-web-app)
 - [Running the application](#running-the-application)
   - [Running the app without custom Rekognition models](#running-the-app-without-custom-rekognition-models)
-  - [Running the application with custom Rekognition models](#running-the-application-with-custom-rekognition-models)
+  - [Running the app with custom models trained with Amazon Rekognition](#running-the-app-with-custom-models-trained-with-amazon-rekognition)
 - [Stoping the application](#stoping-the-application)
 - [Clean up](#clean-up)
 - [Reporting security issues](#reporting-security-issues)
@@ -177,7 +177,7 @@ Once you have deployed the video ingestion and processing pipeline using CloudFo
 
    ![web app screenshot with no custom models](./img/webapp-screenshot-no-custom-models.png)
 
-### Running the application with custom models trained with Amazon Rekognition
+### Running the app with custom models trained with Amazon Rekognition
 
 ## Stoping the application
 
