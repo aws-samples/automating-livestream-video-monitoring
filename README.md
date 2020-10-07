@@ -150,16 +150,34 @@ To deploy the web app using the Amplify Console:
 
 ## Running the application
 
+Once you have deployed the video ingestion and processing pipeline using CloudFormation and the web application using the Amplify Console, you are ready to start running the sample application.
+
+**Note:** Because several features of the sample application (sports detection, logo detection, etc.) relies on Custom Models built in Amazon Rekognition, **they are not enabled by default**.
+
 ### Running the app without custom Rekognition models
 
-Step 1: Start the media processing pipeline
-Running the application without custom Rekognition models
+1. You need to first populate the expected programming schedule table in DynamoDB. Use the provided script and sample schedule if you are using the test source video provided. If using your own video, adjust the content accordingly.
 
-To get the application running without suppliying your own custom Rekognition models, we can simply
+   ```
+   cd broadcast-monitoring
+   pipenv run python scripts/load_csv_to_ddb.py scripts/schedule.csv video-processing-Schedule
+   ```
 
-Step 2: Log in the the web application
+1. In the DynamoDB console, verify the `video-processing-Schedule` table is populated
 
-### Running the application with custom Rekognition models
+1. Start the media processing pipeline. This is done by simply going to the [Elemental MediaLive console](https://console.aws.amazon.com/medialive/home?region=us-east-1), start the MediaLive channel created by the CloudFormation stack to kick off the HLS stream production.
+
+   ![Elemental MediaLive console sreenshot](./img/start-medialive.png)
+
+1) Go to the [AWS Amplify console](https://console.aws.amazon.com/amplify/home?region=us-east-1), find the URL of the web application and open the web app in Chrome or Firefox.
+
+1) Register an account using your email. After verifying your email with a verification code, you should be able to log in to the web app.
+
+1) Here's an example screenshot of the web app when the features requiring custom models are disabled:
+
+   ![web app screenshot with no custom models](./img/webapp-screenshot-no-custom-models.png)
+
+### Running the application with custom models trained with Amazon Rekognition
 
 ## Stoping the application
 
