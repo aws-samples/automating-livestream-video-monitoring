@@ -125,11 +125,9 @@ Resources:
       Environment:
         Variables:
           SFN_ARN: !Ref VideoProcessingStateMachine
-          REUSE_DETECTION_IF_AVAILABLE: True
           AUDIO_CHECK_ENABLED: True
           STATION_LOGO_CHECK_ENABLED: False
           TEAM_LOGO_CHECK_ENABLED: False
-          LANG_DETECT_CHECK_ENABLED: False
           TEAM_DETECT_CHECK_ENABLED: True
           APPSYNC_NOTIFY_ENABLED: True
           SPORTS_DETECT_CHECK_ENABLED: True
