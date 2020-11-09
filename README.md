@@ -2,7 +2,7 @@
 
 In the M&E industry, monitoring live broadcast and OTT video streams has largely been a manual process relying on human operators constantly watching the stream to identify quality or content issues. Latest advances in artificial intelligence(AI) can help automate many monitoring tasks that was once manual and support monitoring at greater scale. This repo presents a demo application for realtime livestream monitoring using AWS serverless and AI/ML services.
 
-Read more on the accompanying [blog post]().
+Read more on the accompanying [blog post](https://aws.amazon.com/blogs/media/automate-broadcast-video-monitoring-using-machine-learning-on-aws/).
 
 - [Architecture](#architecture)
 - [Deploying the application in your AWS account](#deploying-the-application-in-your-aws-account)
