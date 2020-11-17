@@ -24,6 +24,7 @@ applications:
         preBuild:
           commands:
             - cat src/aws-exports.js
+            - npm install
             - npm ci
         build:
           commands:
