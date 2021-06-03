@@ -151,6 +151,9 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: LogDeliveryWrite
+      VersioningConfiguration:
+          Status: Enabled
+    
 
   CloudFront:
     Type: AWS::CloudFront::Distribution
