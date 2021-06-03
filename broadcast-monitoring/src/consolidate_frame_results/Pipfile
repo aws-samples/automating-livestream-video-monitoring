@@ -9,7 +9,7 @@ flake8 = "*"
 pytest = "*"
 isort = "*"
 boto3 = "*"
-pyyaml = "*"
+PyYAML = ">=5.4"
 aws-sam-cli = "*"
 
 [packages]
