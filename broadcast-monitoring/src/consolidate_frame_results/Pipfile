@@ -10,6 +10,7 @@ pytest = "*"
 isort = "*"
 boto3 = "*"
 PyYAML = ">=5.4"
+jinja2 = ">=2.11.3"
 aws-sam-cli = "*"
 
 [packages]
