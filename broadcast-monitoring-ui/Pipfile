@@ -4,8 +4,8 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+yapf = "*"
 
 [packages]
-jinja2 = "*"
+jinja2 = ">=2.11.3"
 boto3 = "*"
-
