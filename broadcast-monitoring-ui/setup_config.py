@@ -1,9 +1,11 @@
 #!/usr/bin/python
-import jinja2, boto3
+import boto3
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-templateFilePath = jinja2.FileSystemLoader('./')
-
-jinjaEnv = jinja2.Environment(loader=templateFilePath)
+# updates to address security concerns of autoescaping
+# see "Notes on Autoescaping" https://jinja.palletsprojects.com/en/3.0.x/api/#basics
+jinjaEnv = Environment(loader=FileSystemLoader('./'),
+                       autoescape=select_autoescape())
 
 cfn_client = boto3.client('cloudformation')
 stack_name = "broadcast-monitoring"
