@@ -8,12 +8,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@aws-amplify/ui-vue": "^1.0.13",
     "@videojs/vhs-utils": "^2.2.1",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-link-http": "^1.5.16",
     "aws-amplify": "^3.3.22",
-    "aws-amplify-vue": "^1.1.2",
     "aws-appsync": "^3.0.2",
     "axios": "^0.21.1",
     "buefy": "^0.8.12",
