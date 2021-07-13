@@ -1,24 +1,23 @@
-require('./assets/styles/bulma-helpers.min.css')
-require('./assets/styles/custom.css')
+require('./assets/styles/bulma-helpers.min.css');
+require('./assets/styles/custom.css');
 
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import Amplify, * as AmplifyModules from 'aws-amplify'
-import { components } from 'aws-amplify-vue'
-import { AmplifyPlugin } from 'aws-amplify-vue'
-import VueApollo from 'vue-apollo'
-import AWSAppSyncClient from 'aws-appsync'
-import awsconfig from './aws-exports'
-import store from './store/store'
-import Buefy from 'buefy'
-import 'buefy/dist/buefy.css'
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
+import '@aws-amplify/ui-vue';
+import Amplify from 'aws-amplify';
+import VueApollo from 'vue-apollo';
+import AWSAppSyncClient from 'aws-appsync';
+import awsconfig from './aws-exports';
+import store from './store/store';
+import Buefy from 'buefy';
+import 'buefy/dist/buefy.css';
 
 if (awsconfig['aws_user_files_s3_bucket'] !== undefined) {
-  delete awsconfig['aws_user_files_s3_bucket']
+  delete awsconfig['aws_user_files_s3_bucket'];
 }
 if (awsconfig['aws_user_files_s3_bucket_region'] !== undefined) {
-  delete awsconfig['aws_user_files_s3_bucket_region']
+  delete awsconfig['aws_user_files_s3_bucket_region'];
 }
 
 const appSyncConfig = {
@@ -28,22 +27,22 @@ const appSyncConfig = {
     type: 'API_KEY',
     apiKey: awsconfig.aws_appsync_apiKey
   }
-}
+};
 const options = {
   defaultOptions: {
     watchQuery: {
       fetchPolicy: 'no-cache'
     }
   }
-}
+};
 
-const appSyncClient = new AWSAppSyncClient(appSyncConfig, options)
+const appSyncClient = new AWSAppSyncClient(appSyncConfig, options);
 const appsyncProvider = new VueApollo({
   defaultClient: appSyncClient
-})
-Vue.use(VueApollo)
+});
+Vue.use(VueApollo);
 
-Amplify.configure(awsconfig)
+Amplify.configure(awsconfig);
 
 const s3_config = {
   Storage: {
@@ -53,18 +52,17 @@ const s3_config = {
       customPrefix: { public: '' } // without this override, amplify tries to load s3 images by prepedning "public/"
     }
   }
-}
-Amplify.configure(s3_config)
+};
+Amplify.configure(s3_config);
 
-Vue.use(AmplifyPlugin, AmplifyModules)
-Vue.use(Buefy)
+Vue.use(Buefy);
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   render: h => h(App),
   router,
   store,
-  components: { App, ...components },
+  components: { App },
   apolloProvider: appsyncProvider
-}).$mount('#app')
+}).$mount('#app');
