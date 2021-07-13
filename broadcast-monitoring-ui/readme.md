@@ -21,7 +21,7 @@ The web application is built using [AWS Amplify](https://docs.amplify.aws/), Vue
    chmod +x setup_config.py
 
    pipenv install
-   pipenv run ./setup_config.py
+   pipenv run ./setup_config.py <replace with desired name of stack>
    ```
 
 1. To use the existing amplify backend, set up amplify configuration
