@@ -29,7 +29,7 @@
         >
           <td class="has-text-weight-bold">{{ getTimeCode(segment.Start_DateTime) }}</td>
           <td class="thumbnail">
-            <amplify-s3-image v-bind:imagePath="segment.Thumbnail_Key"></amplify-s3-image>
+            <amplify-s3-image v-bind:img-key="segment.Thumbnail_Key"></amplify-s3-image>
           </td>
           <td>
             <span class="icon is-small">
@@ -58,16 +58,12 @@
 </template>
 
 <script>
-import { components } from 'aws-amplify-vue'
-import { convertUTCToTimeCode } from '../utils'
-import { LIST_SEGMENTS } from '../graphql/queries'
-import { SEGMENT_SUBSCRIPTION } from '../graphql/subscriptions'
-import moment from 'moment'
+import { convertUTCToTimeCode } from '../utils';
+import { LIST_SEGMENTS } from '../graphql/queries';
+import { SEGMENT_SUBSCRIPTION } from '../graphql/subscriptions';
+import moment from 'moment';
 
 export default {
-  components: {
-    ...components
-  },
   data: function() {
     return {
       checks: [
@@ -78,25 +74,25 @@ export default {
         { name: 'Sports', icon: 'soccer' },
         { name: 'Teams', icon: 'account-group' }
       ]
-    }
+    };
   },
   methods: {
     getTimeCode(dateTimeStr) {
-      return convertUTCToTimeCode(dateTimeStr)
+      return convertUTCToTimeCode(dateTimeStr);
     },
 
     alertCheck(status) {
       if (status === undefined || status === null) {
         // if we don't get a particular status, we treat that check as being disabled.
-        return 'alarm-off'
+        return 'alarm-off';
       } else if (status === true) {
-        return 'checkbox-marked-circle has-text-success'
+        return 'checkbox-marked-circle has-text-success';
       } else {
-        return 'alert has-text-danger'
+        return 'alert has-text-danger';
       }
     },
     selectSegment(selectedSegmentStartTime) {
-      this.$store.commit('manualSelectSegment', selectedSegmentStartTime)
+      this.$store.commit('manualSelectSegment', selectedSegmentStartTime);
     }
   },
   apollo: {
@@ -108,20 +104,20 @@ export default {
           Stream_ID: this.$store.state.stream_id,
           After: this.$store.state.showSegmentAfter,
           limit: 100 // set to 0 to simulate no data
-        }
+        };
       },
       error(error) {
-        console.log(error) // eslint-disable-line no-console
+        console.log(error); // eslint-disable-line no-console
       },
       result({ data, loading }) {
         let isResultEmpty =
           data == null ||
           data.listSegmentSummary == null ||
           data.listSegmentSummary.items == null ||
-          data.listSegmentSummary.items.length === 0
-        this.$store.commit('setSegmenListStatus', { loading: loading, isEmpty: isResultEmpty })
+          data.listSegmentSummary.items.length === 0;
+        this.$store.commit('setSegmenListStatus', { loading: loading, isEmpty: isResultEmpty });
         if (!loading && data && data.listSegmentSummary.items[0]) {
-          this.$store.commit('setLatestSegment', data.listSegmentSummary.items[0].Start_DateTime)
+          this.$store.commit('setLatestSegment', data.listSegmentSummary.items[0].Start_DateTime);
         }
       }
     },
@@ -132,46 +128,49 @@ export default {
         variables() {
           return {
             Stream_ID: this.$store.state.stream_id
-          }
+          };
         },
         error(error) {
-          console.log('error with newSegmentSummaryAdded subscription') // eslint-disable-line no-console
-          console.log(error) // eslint-disable-line no-console
+          console.log('error with newSegmentSummaryAdded subscription'); // eslint-disable-line no-console
+          console.log(error); // eslint-disable-line no-console
         },
         result(data) {
           if (data.data.newSegmentSummaryAdded) {
-            this.$store.commit('setSegmenListStatus', { loading: false, isEmpty: false })
+            this.$store.commit('setSegmenListStatus', { loading: false, isEmpty: false });
           }
           if (
             !this.listSegmentSummary ||
             !this.listSegmentSummary.items ||
             this.listSegmentSummary.items.length === 0
           ) {
-            let items = [data.data.newSegmentSummaryAdded] || []
-            this.listSegmentSummary = { items: items }
-            this.$store.commit('setLatestSegment', data.data.newSegmentSummaryAdded.Start_DateTime)
-            return
+            let items = [data.data.newSegmentSummaryAdded] || [];
+            this.listSegmentSummary = { items: items };
+            this.$store.commit(
+              'setLatestSegment',
+              data.data.newSegmentSummaryAdded.Start_DateTime
+            );
+            return;
           }
-          let newSegmentStartTime = data.data.newSegmentSummaryAdded.Start_DateTime
+          let newSegmentStartTime = data.data.newSegmentSummaryAdded.Start_DateTime;
           for (let i = 0; i < this.listSegmentSummary.items.length; i++) {
-            let currentSegmentStartTime = this.listSegmentSummary.items[i].Start_DateTime
+            let currentSegmentStartTime = this.listSegmentSummary.items[i].Start_DateTime;
             if (moment(newSegmentStartTime).isAfter(currentSegmentStartTime)) {
               console.log(
                 `Inserting new record ${currentSegmentStartTime} before ${currentSegmentStartTime}`
-              )
-              this.listSegmentSummary.items.splice(i, 0, data.data.newSegmentSummaryAdded)
-              break
+              );
+              this.listSegmentSummary.items.splice(i, 0, data.data.newSegmentSummaryAdded);
+              break;
             } else if (moment(newSegmentStartTime).isSame(currentSegmentStartTime)) {
-              console.log(`new record ${currentSegmentStartTime} already exists`)
-              break
+              console.log(`new record ${currentSegmentStartTime} already exists`);
+              break;
             }
           }
-          this.$store.commit('setLatestSegment', this.listSegmentSummary.items[0].Start_DateTime)
+          this.$store.commit('setLatestSegment', this.listSegmentSummary.items[0].Start_DateTime);
         }
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
