@@ -8,9 +8,9 @@
 export default {
   name: 'Signin',
   data() {
-    return {};
+    return {}
   }
-};
+}
 </script>
 
 <style scoped></style>
