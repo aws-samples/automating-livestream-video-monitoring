@@ -13,50 +13,48 @@
  * Note: this file was adapted from the sample at https://github.com/aws-samples/aws-amplify-vue/blob/master/src/router/index.js
  */
 
-import Vue from 'vue';
-import Router from 'vue-router';
-import BroadcastMonitor from '@/components/BroadcastMonitor';
-import Signin from '@/components/Signin';
-import {AmplifyEventBus} from 'aws-amplify-vue';
-import Amplify, * as AmplifyModules from 'aws-amplify';  // eslint-disable-line
-import {AmplifyPlugin} from 'aws-amplify-vue';
-import AmplifyStore from '../store/store';
+import Vue from 'vue'
+import Router from 'vue-router'
+import BroadcastMonitor from '@/components/BroadcastMonitor'
+import Signin from '@/components/Signin'
+import AmplifyStore from '../store/store'
+import { Auth } from 'aws-amplify'
+import { onAuthUIStateChange } from '@aws-amplify/ui-components'
 
+Vue.use(Router)
 
-Vue.use(Router);
-Vue.use(AmplifyPlugin, AmplifyModules);
-
-let user;
-
-getUser().then((user) => {
+let user
+getUser().then(user => {
   if (user) {
-    router.push({path: '/'})
+    router.push({ path: '/' })
   }
 })
 
-
-AmplifyEventBus.$on('authState', async (state) => {
-  console.log(state)  // eslint-disable-line
-  if (state === 'signedOut') {
-    user = null;
-    AmplifyStore.commit('setUser', null);
-    router.push({path: '/auth'})
-  } else if (state === 'signedIn') {
-    user = await getUser();
-    router.push({path: '/'})
+onAuthUIStateChange((authState, authData) => {
+  console.log(authState) // eslint-disable-line
+  if (authState === 'signedOut') {
+    user = null
+    AmplifyStore.commit('setUser', null)
+    router.push({ paty: '/' })
+  } else if (authState === 'signedIn') {
+    user = authData
+    router.push({ path: '/' })
   }
-});
+})
 
-function getUser() {
-  return Vue.prototype.$Amplify.Auth.currentAuthenticatedUser().then((data) => {
-    if (data && data.signInUserSession) {
-      AmplifyStore.commit('setUser', data);
-      return data;
+async function getUser() {
+  try {
+    const userData = await Auth.currentAuthenticatedUser()
+    const { signInUserSession } = userData
+    if (userData && signInUserSession) {
+      AmplifyStore.commit('setUser', userData)
+      return userData
     }
-  }).catch((e) => {  // eslint-disable-line
-    AmplifyStore.commit('setUser', null);
-    return null
-  });
+  } catch (e) {
+    AmplifyStore.commit('setUser', null)
+  }
+
+  return null
 }
 
 const router = new Router({
@@ -65,7 +63,7 @@ const router = new Router({
       path: '/',
       name: 'Home',
       component: BroadcastMonitor,
-      meta: {requiresAuth: true}
+      meta: { requiresAuth: true }
     },
     {
       path: '/auth',
@@ -73,18 +71,18 @@ const router = new Router({
       component: Signin
     }
   ]
-});
+})
 
 router.beforeResolve(async (to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    user = await getUser();
+    user = await getUser()
     if (!user) {
       return next({
         path: '/auth',
         query: {
-          redirect: to.fullPath,
+          redirect: to.fullPath
         }
-      });
+      })
     }
     return next()
   }

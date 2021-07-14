@@ -4,9 +4,8 @@ require('./assets/styles/custom.css')
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import Amplify, * as AmplifyModules from 'aws-amplify'
-import { components } from 'aws-amplify-vue'
-import { AmplifyPlugin } from 'aws-amplify-vue'
+import '@aws-amplify/ui-vue'
+import Amplify from 'aws-amplify'
 import VueApollo from 'vue-apollo'
 import AWSAppSyncClient from 'aws-appsync'
 import awsconfig from './aws-exports'
@@ -56,7 +55,6 @@ const s3_config = {
 }
 Amplify.configure(s3_config)
 
-Vue.use(AmplifyPlugin, AmplifyModules)
 Vue.use(Buefy)
 
 Vue.config.productionTip = false
@@ -65,6 +63,6 @@ new Vue({
   render: h => h(App),
   router,
   store,
-  components: { App, ...components },
+  components: { App },
   apolloProvider: appsyncProvider
 }).$mount('#app')

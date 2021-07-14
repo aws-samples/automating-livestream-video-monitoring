@@ -29,7 +29,7 @@
         >
           <td class="has-text-weight-bold">{{ getTimeCode(segment.Start_DateTime) }}</td>
           <td class="thumbnail">
-            <amplify-s3-image v-bind:imagePath="segment.Thumbnail_Key"></amplify-s3-image>
+            <amplify-s3-image v-bind:img-key="segment.Thumbnail_Key"></amplify-s3-image>
           </td>
           <td>
             <span class="icon is-small">
@@ -58,16 +58,12 @@
 </template>
 
 <script>
-import { components } from 'aws-amplify-vue'
 import { convertUTCToTimeCode } from '../utils'
 import { LIST_SEGMENTS } from '../graphql/queries'
 import { SEGMENT_SUBSCRIPTION } from '../graphql/subscriptions'
 import moment from 'moment'
 
 export default {
-  components: {
-    ...components
-  },
   data: function() {
     return {
       checks: [

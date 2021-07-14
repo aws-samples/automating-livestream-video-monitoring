@@ -1,6 +1,7 @@
 <template>
-  <div id="app" v-if="hydrated">
-    <router-view />
+  <div id="app">
+    <router-view v-if="hydrated" />
+    <h1 v-else>Loading</h1>
   </div>
 </template>
 
@@ -9,10 +10,10 @@ export default {
   name: 'app',
   data: () => ({ hydrated: false }),
   async mounted() {
-    await this.$apollo.provider.defaultClient.hydrated()
-    this.hydrated = true
+    await this.$apollo.provider.defaultClient.hydrated();
+    this.hydrated = true;
   }
-}
+};
 </script>
 
 <style>
