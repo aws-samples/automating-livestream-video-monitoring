@@ -77,7 +77,7 @@ export default {
     },
     videoOptions: function() {
       return {
-        aspectRatio: '16:9',
+        aspectRatio: '1:1',
         autoplay: false,
         controls: true,
         sources: [
