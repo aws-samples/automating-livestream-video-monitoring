@@ -15,7 +15,7 @@ applications:
             - python3 --version
             - pip3 --version
             - pip3 install -r requirements.txt
-            - python3 setup_config.py
+            - python3 setup_config.py broadcast-monitoring
         build:
           commands:
             - amplifyPush --simple
