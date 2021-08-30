@@ -223,7 +223,7 @@ table tr:first-of-type td:first-of-type::before {
   display: block;
 }
 
-.amplify-s3-image {
+>>> .amplify-image {
   width: 50% !important;
   margin: 0 !important;
 }
