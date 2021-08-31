@@ -89,7 +89,7 @@ If you would like to develop on top of the application and make changes, you can
 
 7) After the processing pipeline finish deploying , build and deploy the media ingest pipeline:
 
-   ```shel
+   ```shell
    pipenv run make build.mediaingest
    pipenv run make deploy.mediaingest
    ```
