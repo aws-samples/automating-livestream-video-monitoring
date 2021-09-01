@@ -5,7 +5,7 @@ import boto3
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 args = sys.argv[1:]
-stack_name = args[0] if args[0] else os.getenv("BACKEND_STACK", "broadcast-monitoring")
+stack_name = args[0] if args else os.getenv("BACKEND_STACK", "broadcast-monitoring")
 
 # updates to address security concerns of autoescaping
 # see "Notes on Autoescaping" https://jinja.palletsprojects.com/en/3.0.x/api/#basics
