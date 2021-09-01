@@ -5,10 +5,7 @@ import boto3
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 args = sys.argv[1:]
-
-if not args:
-    raise Exception('Name of video-processing stack missing.')
-
+stack_name = args[0] if args[0] else os.getenv("BACKEND_STACK", "broadcast-monitoring")
 
 # updates to address security concerns of autoescaping
 # see "Notes on Autoescaping" https://jinja.palletsprojects.com/en/3.0.x/api/#basics
@@ -16,7 +13,6 @@ jinjaEnv = Environment(loader=FileSystemLoader('./'),
                        autoescape=select_autoescape())
 
 cfn_client = boto3.client('cloudformation')
-stack_name = args[0] if args[0] else os.getenv("BACKEND_STACK", "broadcast-monitoring")
 
 response = cfn_client.describe_stacks(StackName=stack_name)["Stacks"]
 
