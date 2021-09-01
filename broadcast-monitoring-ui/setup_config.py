@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import os
 import sys
 import boto3
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -15,7 +16,7 @@ jinjaEnv = Environment(loader=FileSystemLoader('./'),
                        autoescape=select_autoescape())
 
 cfn_client = boto3.client('cloudformation')
-stack_name = args[0]
+stack_name = args[0] if args[0] else os.getenv("BACKEND_STACK", "broadcast-monitoring")
 
 response = cfn_client.describe_stacks(StackName=stack_name)["Stacks"]
 
