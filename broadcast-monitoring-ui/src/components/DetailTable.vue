@@ -94,6 +94,7 @@
 </template>
 
 <script>
+// import { Storage } from 'aws-amplify'
 import DetailTableRow from './DetailTableRow'
 import DetailTableTeams from './DetailTableTeams'
 
@@ -126,18 +127,18 @@ export default {
   },
   watch: {
     /* eslint-disable no-unused-vars */
-    frameDetail: async function(newFrameDetail, oldFrameDetail) {
-      if (
-        newFrameDetail &&
-        newFrameDetail.Logo_Check &&
-        newFrameDetail.Logo_Check.Detected_Logo_Crop_S3_Key
-      ) {
-        this.cropLogoSrc = await this.$Amplify.Storage.get(
-          newFrameDetail.Logo_Check.Detected_Logo_Crop_S3_Key
-        )
-        return
-      }
-      this.cropLogoSrc = null
+    frameDetail: async newFrameDetail => {
+      // if (
+      //   newFrameDetail &&
+      //   newFrameDetail.Logo_Check &&
+      //   newFrameDetail.Logo_Check.Detected_Logo_Crop_S3_Key
+      // ) {
+      //   this.cropLogoSrc = await Storage.get(
+      //     newFrameDetail.Logo_Check.Detected_Logo_Crop_S3_Key
+      //   )
+      //   return
+      // }
+      // this.cropLogoSrc = null
     }
   },
   computed: {

@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { Storage } from 'aws-amplify'
 export default {
   name: 'DetailFrameThumbnail',
   props: {
@@ -42,7 +43,7 @@ export default {
     }
   },
   mounted() {
-    this.$Amplify.Storage.get(this.thumbnailS3Key)
+    Storage.get(this.thumbnailS3Key)
       .then(url => {
         this.url = url
       })
@@ -52,7 +53,7 @@ export default {
   },
   watch: {
     thumbnailS3Key: function(newS3Key) {
-      this.$Amplify.Storage.get(newS3Key)
+      Storage.get(newS3Key)
         .then(url => {
           this.url = url
         })
