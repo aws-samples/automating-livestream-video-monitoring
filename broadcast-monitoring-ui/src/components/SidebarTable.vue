@@ -223,8 +223,9 @@ table tr:first-of-type td:first-of-type::before {
   display: block;
 }
 
->>> .amplify-s3-image {
-  width: 50% !important;
+/*https://docs.amplify.aws/ui/storage/s3-image/q/framework/react/#props-css-amplify-s3-image*/
+amplify-s3-image {
+  --width: 50% !important;
   margin: 0 !important;
 }
 </style>
