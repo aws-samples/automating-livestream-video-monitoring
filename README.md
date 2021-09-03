@@ -142,7 +142,7 @@ To deploy the web app using the Amplify Console:
 
    ![Amplify console screenshot](./img/amplify-console-deploy-finish.png)
 
-1. We need to do one more configuration to link the processing pipeline to the web application. To do this:
+1. We need to perform an additional step to link the processing pipeline to the web application. To do this:
 
    - In the Amplify application, go to the “**Backend environments**” tab
    - Click on the “**API**” link under “**categories added**”
