@@ -89,7 +89,7 @@ If you would like to develop on top of the application and make changes, you can
 
 7) After the processing pipeline finish deploying , build and deploy the media ingest pipeline:
 
-   ```shel
+   ```shell
    pipenv run make build.mediaingest
    pipenv run make deploy.mediaingest
    ```
@@ -125,28 +125,37 @@ To deploy the web app using the Amplify Console:
 
       ![Amplify console screenshot](./img/amplify-configure-build.png)
 
-1.  In the **Review** page, double check the configurations before clicking **Save and Deploy**
+**_ FOLLOWING STEP IMPORTANT FOR BUILDING WITH CI _**
 
-    ![Amplify console screenshot](./img/amplify-connect-review.png)
+1. Navigate to **Environment variables** page:
 
-1.  Wait for the web app to finish deployment.
+   - Click the **Manage Variables** button to add a new Environment Variable
+   - Click **Add Vaiable** and enter the following values in the fields
+     - Variable: **BACKEND_STACK**
+     - Value: _<name of the stack deployed in the previous section>_
 
-    ![Amplify console screenshot](./img/amplify-console-deploy-finish.png)
+1. In the **Review** page, double check the configurations before clicking **Save and Deploy**
 
-1.  We need to do one more configuration to link the processing pipeline to the web application. To do this:
+   ![Amplify console screenshot](./img/amplify-connect-review.png)
 
-    - In the Amplify application, go to the “**Backend environments**” tab
-    - Click on the “**API**” link under “**categories added**”
-    - Then click on “**View in AppSync**” to go to the AWS AppSync console
-    - In the Settings tab, find the **API Details** section and copy the **API URL**
-      ![AppSync console screenshot](./img/AppSync-endpoint.png)
+1. Wait for the web app to finish deployment.
 
-    - Also copy the API key from the **API Keys** section
-      ![AppSync console screenshot](./img/Appsync-API-Key-screenshot.png)
+   ![Amplify console screenshot](./img/amplify-console-deploy-finish.png)
 
-    - Go to the [AWS Lambda console](https://console.aws.amazon.com/lambda/home), find the lambda function with name “_AppSyncNotify_” in it. Edit the environment variable by pasting the GraphQL API URL and Key you copied from previous step, and click **save**
+1. We need to perform an additional step to link the processing pipeline to the web application. To do this:
 
-      ![Lambda console screenshot](./img/lambda-env-appsync-endpoint.png)
+   - In the Amplify application, go to the “**Backend environments**” tab
+   - Click on the “**API**” link under “**categories added**”
+   - Then click on “**View in AppSync**” to go to the AWS AppSync console
+   - In the Settings tab, find the **API Details** section and copy the **API URL**
+     ![AppSync console screenshot](./img/AppSync-endpoint.png)
+
+   - Also copy the API key from the **API Keys** section
+     ![AppSync console screenshot](./img/Appsync-API-Key-screenshot.png)
+
+   - Go to the [AWS Lambda console](https://console.aws.amazon.com/lambda/home), find the lambda function with name “_AppSyncNotify_” in it. Edit the environment variable by pasting the GraphQL API URL and Key you copied from previous step, and click **save**
+
+     ![Lambda console screenshot](./img/lambda-env-appsync-endpoint.png)
 
 ## Running the application
 

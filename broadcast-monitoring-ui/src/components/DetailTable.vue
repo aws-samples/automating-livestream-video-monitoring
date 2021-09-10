@@ -94,6 +94,7 @@
 </template>
 
 <script>
+import { Storage } from 'aws-amplify'
 import DetailTableRow from './DetailTableRow'
 import DetailTableTeams from './DetailTableTeams'
 
@@ -132,9 +133,7 @@ export default {
         newFrameDetail.Logo_Check &&
         newFrameDetail.Logo_Check.Detected_Logo_Crop_S3_Key
       ) {
-        this.cropLogoSrc = await this.$Amplify.Storage.get(
-          newFrameDetail.Logo_Check.Detected_Logo_Crop_S3_Key
-        )
+        this.cropLogoSrc = await Storage.get(newFrameDetail.Logo_Check.Detected_Logo_Crop_S3_Key)
         return
       }
       this.cropLogoSrc = null

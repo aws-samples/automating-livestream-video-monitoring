@@ -21,86 +21,93 @@
 ##############################################################################
 import json
 import uuid
-import lib.cfnresponse as cfn
-import lib.mediapackage as MediaPackage
-import lib.medialive as MediaLive
+from crhelper import CfnResource
+import libs.mediapackage as MediaPackage
+import libs.medialive as MediaLive
+
+
+
+# Initialise the helper, all inputs are optional, this example shows the defaults
+helper = CfnResource(json_logging=False, log_level='DEBUG', boto_level='CRITICAL', sleep_on_delete=120, ssl_verify=None)
+
+
+def get_event_details(event):
+    request = event['RequestType']
+    resource = event['ResourceProperties']['Resource']
+    return request, resource
+
+@helper.create
+def create(event,context):
+    print('Received event: ', json.dumps(event, indent=2))
+    request, resource = get_event_details(event)
+    config = event['ResourceProperties']
+    responseData = {}
+    print('REQUEST::{}::{}'.format(request, resource))
+    print('CONFIG::{}'.format(config))
+
+    if resource == 'MediaLiveInput':
+
+        if 'MP4_FILE' in config['Type']:
+            responseData = MediaLive.create_file_input(config)
+        else:
+            responseData = MediaLive.create_pull_input(config)
+        id = responseData['Id']
+
+    elif resource == 'MediaLiveChannel':
+        responseData = MediaLive.create_channel(config)
+        id = responseData['ChannelId']
+
+    elif resource == 'MediaPackageChannel':
+        responseData = MediaPackage.create_channel(config)
+        id = responseData['ChannelId']
+
+    elif resource == 'MediaPackageEndPoint':
+        responseData = MediaPackage.create_endpoint(config)
+        id = responseData['Id']
+
+    elif resource == 'UUID':
+        responseData = {'UUID': str(uuid.uuid4())}
+        id = responseData['UUID']
+
+    else:
+        msg = 'Create failed, {} not defined in the Custom Resource'.format(resource)
+        print(msg)
+        raise ValueError(msg)
+
+    helper.Data.update(responseData)
+    return id
+
+
+@helper.update
+def update(event, context):
+    request, resource = get_event_details(event)
+
+    if resource == 'MediaPackageEndPoint':
+        responseData = MediaPackage.update_endpoint(event['PhysicalResourceId'])
+        helper.Data.update(responseData)
+        return responseData['Id']
+    else:
+        print('RESPONSE:: {} Not supported. no op'.format(request))
+
+
+@helper.delete
+def delete(event, context):
+    request, resource = get_event_details(event)
+    if event['PhysicalResourceId'] != 'FailedCreation':
+        if resource == 'MediaLiveChannel':
+            MediaLive.delete_channel(event['PhysicalResourceId'])
+
+        elif resource == 'MediaPackageChannel':
+            MediaPackage.delete_channel(event['PhysicalResourceId'])
+
+        else:
+            # mediapackage endpoints are deleted as part of
+            # the the channel deletes so not included here, sending default success response
+            print('RESPONSE:: {} : delete not required, sending success response'.format(resource))
+    else:
+        print('RESPONSE:: {} : delete not required, sending success response'.format(resource))
+
 
 
 def handler(event, context):
-    # Each resource returns a promise with a json object to return cloudformation.
-    try:
-        print('Received event: %s', json.dumps(event, indent=2))
-        request = event['RequestType']
-        resource = event['ResourceProperties']['Resource']
-        config = event['ResourceProperties']
-        responseData = {}
-        print('REQUEST::{}::{}'.format(request, resource))
-        print('CONFIG::{}'.format(config))
-
-        if request == 'Create':
-            try:
-                if resource == 'MediaLiveInput':
-
-                    if 'MP4_FILE' in config['Type']:
-                        responseData = MediaLive.create_file_input(config)
-                    else:
-                        responseData = MediaLive.create_pull_input(config)
-                    id = responseData['Id']
-
-                elif resource == 'MediaLiveChannel':
-                    responseData = MediaLive.create_channel(config)
-                    id = responseData['ChannelId']
-
-                elif resource == 'MediaPackageChannel':
-                    responseData = MediaPackage.create_channel(config)
-                    id = responseData['ChannelId']
-
-                elif resource == 'MediaPackageEndPoint':
-                    responseData = MediaPackage.create_endpoint(config)
-                    id = responseData['Id']
-
-                elif resource == 'UUID':
-                    responseData = {'UUID': str(uuid.uuid4())}
-                    id = responseData['UUID']
-
-                else:
-                    print('Create failed, {} not defined in the Custom Resource'.format(resource))
-                    cfn.send(event, context, 'FAILED', {}, context.log_stream_name)
-
-                cfn.send(event, context, 'SUCCESS', responseData, id)
-            except Exception as e:
-                print('Exception: {}'.format(e))
-                cfn.send(event, context, 'FAILED', {}, 'FailedCreation')
-                print(e)
-
-        elif request == 'Delete':
-            if event['PhysicalResourceId'] != 'FailedCreation':
-                if resource == 'MediaLiveChannel':
-                    MediaLive.delete_channel(event['PhysicalResourceId'])
-
-                elif resource == 'MediaPackageChannel':
-                    MediaPackage.delete_channel(event['PhysicalResourceId'])
-
-                else:
-                    # mediapackage endpoints are deleted as part of
-                    # the the channel deletes so not included here, sending default success response
-                    print('RESPONSE:: {} : delete not required, sending success response'.format(resource))
-            else:
-                print('RESPONSE:: {} : delete not required, sending success response'.format(resource))
-
-            cfn.send(event, context, 'SUCCESS', {})
-
-        elif request == 'Update':
-            if resource == 'MediaPackageEndPoint':
-                responseData = MediaPackage.update_endpoint(event['PhysicalResourceId'])
-                id = responseData['Id']
-                cfn.send(event, context, 'SUCCESS', responseData, id)
-
-            else:
-                print('RESPONSE:: {} Not supported. no op'.format(request))
-                cfn.send(event, context, 'SUCCESS', {})
-
-    except Exception as e:
-        print('Exception: {}'.format(e))
-        cfn.send(event, context, 'FAILED', {}, context.log_stream_name)
-        print(e)
+    helper(event, context)
