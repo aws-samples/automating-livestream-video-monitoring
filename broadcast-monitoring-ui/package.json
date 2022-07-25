@@ -13,8 +13,8 @@
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-link-http": "^1.5.16",
-    "aws-amplify": "^3.3.22",
-    "aws-appsync": "^3.0.2",
+    "aws-amplify": "^4.3.28",
+    "aws-appsync": "^4.1.7",
     "axios": "^0.21.1",
     "buefy": "^0.8.12",
     "core-js": "^3.4.4",
@@ -28,17 +28,17 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.1.0",
-    "@vue/cli-plugin-eslint": "^4.1.0",
-    "@vue/cli-service": "^4.1.0",
+    "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-plugin-eslint": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-vue": "^5.0.0",
-    "video.js": "^7.6.6",
     "husky": "^4.2.1",
     "prettier": "1.19.1",
     "pretty-quick": "^2.0.1",
+    "video.js": "^7.6.6",
     "vue-template-compiler": "^2.6.10"
   },
   "husky": {
