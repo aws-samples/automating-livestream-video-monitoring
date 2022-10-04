@@ -47,7 +47,7 @@ class TeamInfoFactory(object):
     def load_items_from_yaml(self, item_yaml_file):
         try:
             with open(item_yaml_file, 'r') as f:
-                items = yaml.load(f, Loader=yaml.SafeLoader)
+                items = yaml.safe_load(f)
                 for team_name in items:
                     team_id = items[team_name]['id']
                     abbrs = items[team_name]['abbr']

@@ -27,7 +27,7 @@ class StationLogoCheck:
     def load_station_data(self, file_name):
         try:
             with open(file_name, 'r') as f:
-                data = yaml.load(f, Loader=yaml.FullLoader)
+                data = yaml.safe_load(f)
 
         except Exception as e:
             raise e
