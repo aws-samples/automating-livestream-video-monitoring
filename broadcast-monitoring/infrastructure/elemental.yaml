@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: This template creates resources needed by AWS Elemental MediaLive and MediaPackage.
 
@@ -145,15 +145,17 @@ Resources:
       Runtime: python3.7
       Timeout: 180
 
-
   LogsBucket:
     DeletionPolicy: Retain
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: LogDeliveryWrite
       VersioningConfiguration:
-          Status: Enabled
-    
+        Status: Enabled
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
 
   CloudFront:
     Type: AWS::CloudFront::Distribution

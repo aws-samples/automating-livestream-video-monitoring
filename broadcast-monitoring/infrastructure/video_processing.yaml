@@ -35,6 +35,10 @@ Resources:
       BucketName: !Sub "broadcast-monitoring-${AWS::AccountId}-${AWS::Region}"
       VersioningConfiguration:
         Status: "Enabled"
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
       LifecycleConfiguration:
         Rules:
           - Id: expire-old-hls-versions
@@ -210,7 +214,7 @@ Resources:
       Environment:
         Variables:
           SPORTS_MIN_CONFIDENCE: 60
-          SPORTS_MODEL_ARN:  TO_BE_UPDATED
+          SPORTS_MODEL_ARN: TO_BE_UPDATED
 
   ConsolidateTeamInfoFunction:
     Type: AWS::Serverless::Function
