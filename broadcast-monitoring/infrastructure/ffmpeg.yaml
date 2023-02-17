@@ -1,6 +1,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
-Description: This template creates an ffmpeg layer for use with lambda function which process stream data
+Description: This template creates an ffmpeg layer for use with lambda function which process stream data for automating-livestream-video-monitoring (uksb-1tsflhnde).
+
 
 Resources:
   ffmpegLayer:

@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "An auto-generated nested stack.",
+  "Description": "An auto-generated nested stack for automating-livestream-video-monitoring (uksb-1tsflhnde).",
   "Metadata": {},
   "Parameters": {
     "SegmentTable": {
