@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Lambda resource stack creation using Amplify CLI",
+  "Description": "Lambda resource stack creation using Amplify CLI for automating-livestream-video-monitoring (uksb-1tsflhnde)",
   "Parameters": {
     "env": {
       "Type": "String"
