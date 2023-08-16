@@ -5,9 +5,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import '@aws-amplify/ui-vue'
-import Amplify from 'aws-amplify'
+import Amplify, { Auth } from 'aws-amplify'
 import VueApollo from 'vue-apollo'
-import AWSAppSyncClient from 'aws-appsync'
+import AWSAppSyncClient, { AUTH_TYPE } from 'aws-appsync'
 import awsconfig from './aws-exports'
 import store from './store/store'
 import Buefy from 'buefy'
@@ -24,8 +24,8 @@ const appSyncConfig = {
   url: awsconfig.aws_appsync_graphqlEndpoint,
   region: awsconfig.aws_appsync_region,
   auth: {
-    type: 'API_KEY',
-    apiKey: awsconfig.aws_appsync_apiKey
+    type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
+    jwtToken: (await Auth.currentSession()).getAccessToken().getJwtToken()
   }
 }
 const options = {
