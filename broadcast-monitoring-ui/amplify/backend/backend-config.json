@@ -8,11 +8,7 @@
         "authConfig": {
           "additionalAuthenticationProviders": [],
           "defaultAuthentication": {
-            "authenticationType": "API_KEY",
-            "apiKeyConfig": {
-              "description": "latest",
-              "apiKeyExpirationDays": "365"
-            }
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS"
           }
         }
       }
