@@ -5,12 +5,10 @@ verify_ssl = true
 
 [dev-packages]
 pytest = "*"
-yapf = "*"
 flake8 = "*"
 
 [packages]
 ffmpeg-python = "*"
-py = ">=1.10.0"
 
 [requires]
 python_version = "3.7"
