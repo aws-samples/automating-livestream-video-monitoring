@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@aws-amplify/ui-vue": "^1.0.13",
+    "@aws-amplify/ui-vue": "^4.2.22",
     "@videojs/vhs-utils": "^2.2.1",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
@@ -16,16 +16,16 @@
     "aws-amplify": "^4.3.28",
     "aws-appsync": "^4.1.7",
     "axios": "^0.21.1",
-    "buefy": "^0.8.12",
+    "buefy": "^1.0.0",
     "core-js": "^3.4.4",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "m3u8-parser": "^4.4.0",
     "moment": "^2.24.0",
-    "vue": "^2.6.10",
+    "vue": "^3.5.12",
     "vue-apollo": "^3.0.3",
     "vue-router": "^3.1.5",
-    "vuex": "^3.1.2"
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^5.0.8",
